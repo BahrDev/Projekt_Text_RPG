@@ -63,54 +63,54 @@ public class Item {
 	
 	
 
-	public void Schlüssel(String befehl) {
-		if (befehl.toUpperCase().contains("WEST")) {
-			if (Spiel.map[Held.posX][Held.posY].isTuerWest()) {
-				if (Spiel.map[Held.posX][Held.posY].isTuerWestLocked()) {
-					Spiel.map[Held.posX][Held.posY].setTuerWestLocked(false);
-					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-				}else {
-					System.out.println("Diese Tür ist nicht verschlossen.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if (befehl.toUpperCase().contains("OST")) {
-			if (Spiel.map[Held.posX][Held.posY].isTuerOst()) {
-				if (Spiel.map[Held.posX][Held.posY].isTuerOstLocked()) {
-					Spiel.map[Held.posX][Held.posY].setTuerOstLocked(false);
-					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-				}else {
-					System.out.println("Diese Tür ist nicht verschlossen.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if (befehl.toUpperCase().contains("NORD")) {
-			if (Spiel.map[Held.posX][Held.posY].isTuerNord()) {
-				if (Spiel.map[Held.posX][Held.posY].isTuerNordLocked()) {
-					Spiel.map[Held.posX][Held.posY].setTuerNordLocked(false);
-					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-				}else {
-					System.out.println("Diese Tür ist nicht verschlossen.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if (befehl.toUpperCase().contains("SÜD")) {
-			if (Spiel.map[Held.posX][Held.posY].isTuerNord()) {
-				if (Spiel.map[Held.posX][Held.posY].isTuerNordLocked()) {
-					Spiel.map[Held.posX][Held.posY].setTuerNordLocked(false);
-					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-				}else {
-					System.out.println("Diese Tür ist nicht verschlossen.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else {
-			System.out.println("Wo bitte willst du den Schlüssel rein stecken!?!");
-		}
+	public void Schlüssel(String befehl) {						// überarbeiten weil Tür nun eine Klasse ist
+//		if (befehl.toUpperCase().contains("WEST")) {
+//			if (Spiel.map[Held.posX][Held.posY].isTuerWest()) {
+//				if (Spiel.map[Held.posX][Held.posY].isTuerWestLocked()) {
+//					Spiel.map[Held.posX][Held.posY].setTuerWestLocked(false);
+//					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
+//				}else {
+//					System.out.println("Diese Tür ist nicht verschlossen.");
+//				}
+//			}else {
+//				System.out.println("Hier ist keine Tür.");
+//			}
+//		}else if (befehl.toUpperCase().contains("OST")) {
+//			if (Spiel.map[Held.posX][Held.posY].isTuerOst()) {
+//				if (Spiel.map[Held.posX][Held.posY].isTuerOstLocked()) {
+//					Spiel.map[Held.posX][Held.posY].setTuerOstLocked(false);
+//					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
+//				}else {
+//					System.out.println("Diese Tür ist nicht verschlossen.");
+//				}
+//			}else {
+//				System.out.println("Hier ist keine Tür.");
+//			}
+//		}else if (befehl.toUpperCase().contains("NORD")) {
+//			if (Spiel.map[Held.posX][Held.posY].isTuerNord()) {
+//				if (Spiel.map[Held.posX][Held.posY].isTuerNordLocked()) {
+//					Spiel.map[Held.posX][Held.posY].setTuerNordLocked(false);
+//					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
+//				}else {
+//					System.out.println("Diese Tür ist nicht verschlossen.");
+//				}
+//			}else {
+//				System.out.println("Hier ist keine Tür.");
+//			}
+//		}else if (befehl.toUpperCase().contains("SÜD")) {
+//			if (Spiel.map[Held.posX][Held.posY].isTuerNord()) {
+//				if (Spiel.map[Held.posX][Held.posY].isTuerNordLocked()) {
+//					Spiel.map[Held.posX][Held.posY].setTuerNordLocked(false);
+//					System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
+//				}else {
+//					System.out.println("Diese Tür ist nicht verschlossen.");
+//				}
+//			}else {
+//				System.out.println("Hier ist keine Tür.");
+//			}
+//		}else {
+//			System.out.println("Wo bitte willst du den Schlüssel rein stecken!?!");
+//		}
 	}
 
 	public void Kompass() {
