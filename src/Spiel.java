@@ -3,7 +3,8 @@ import java.util.Scanner;
 
 public class Spiel {
 	
-	public static Raum[][] map = new Raum[4][4];
+	public static Raum[][] map = new Raum[6][6];
+	public static Tuer[][][][] tueren = new Tuer[6][6][6][6];
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Scanner scan = new Scanner(System.in);
 	
@@ -13,7 +14,7 @@ public class Spiel {
 		Spiel.GeneriereAlleItems();
 		//Spiel.TesteAlleItems();
 		Spiel.DefaultMap();
-		Spiel.StartingPos(0, 0);
+		Spiel.StartingPos(1, 1);
 		Spiel.StartRaum();
 		Spiel.UserEingabe();
 		
@@ -25,37 +26,46 @@ public class Spiel {
 		// Erinnerung (X, Y, Nord, Süd, West, Ost)
 		// Erinnerung (X, Y, Nord, Süd, West, Ost, ItemID)
 		// Erinnerung (X, Y, Nord, Süd, West, Ost, NordLocked, SüdLocked, WestLocked, OstLocked)
-		map[0][0] = new Raum(0, 0, false, true, false, false, 6);
-		map[1][0] = new Raum(1, 0, false, true, false, true);
-		map[2][0] = new Raum(2, 0, false, true, true, false);
-		map[3][0] = new Raum(3, 0, false, true, false, false);
+		map[1][1] = new Raum(1, 1, 6);
+		map[2][1] = new Raum(2, 1);
+		map[3][1] = new Raum(3, 1);
+		map[4][1] = new Raum(4, 1);
 		
-		map[0][1] = new Raum(0, 1, true, true, false, true, false, false, false, true, 7);
-		map[1][1] = new Raum(1, 1, true, true, true, false);
-		map[2][1] = new Raum(2, 1, true, false, false, true);
-		map[3][1] = new Raum(3, 1, true, true, true, false);
+		map[1][2] = new Raum(1, 2, 7);
+		map[2][2] = new Raum(2, 2);
+		map[3][2] = new Raum(3, 2);
+		map[4][2] = new Raum(4, 2);
 		
-		map[0][2] = new Raum(0, 2, true, false, false, false, 1);
-		map[1][2] = new Raum(1, 2, true, true, false, false);
-		map[2][2] = new Raum(2, 2, false, true, false, true);
-		map[3][2] = new Raum(3, 2, true, true, true, false);
+		map[1][3] = new Raum(1, 3, 1);
+		map[2][3] = new Raum(2, 3);
+		map[3][3] = new Raum(3, 3);
+		map[4][3] = new Raum(4, 3);
 		
-		map[0][3] = new Raum(0, 3, false, false, false, true);
-		map[1][3] = new Raum(1, 3, true, true, true, true);
-		map[2][3] = new Raum(2, 3, true, false, true, false);
-		map[3][3] = new Raum(3, 3, true, false, false, false);
+		map[1][4] = new Raum(1, 4);
+		map[2][4] = new Raum(2, 4);
+		map[3][4] = new Raum(3, 4);
+		map[4][4] = new Raum(4, 4);
+		
+		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
 	}
 	
+
+
 	
 	
 	// Aktionen des Spielers
-	public static void GoNord () {
-		if (map[Held.posX][Held.posY].isTuerNord()) {
-			if (map[Held.posX][Held.posY].isTuerNordLocked()) {
+	public static void Go (int laufrichtungX, int laufrichtungY) {
+		int zielraumX = Held.posX + laufrichtungX;
+		int zielraumY = Held.posY + laufrichtungY;
+		if (tuertargetting(zielraumX, zielraumY) != null) {
+			if (tuertargetting(zielraumX, zielraumY).isMasterLocked()) {
+				System.out.println("Du brauchst einen besonderen Schlüssel um diese Tür zu öffnen.");
+			}else if (tuertargetting(zielraumX, zielraumY).isSimpleLocked()) {
 				System.out.println("Diese Tür ist verschlossen.");
 			}else {
-				System.out.println("Du verlässt den Raum nach Norden.");
-				Held.posY--;
+				System.out.println("Du verlässt den Raum nach Süden."); //Richtungsangabe als Methode schreiben
+				Held.posX = zielraumX;
+				Held.posY = zielraumY;
 				Spiel.BetreteRaum();
 			}
 		}else {
@@ -63,47 +73,6 @@ public class Spiel {
 		}
 	}
 	
-	public static void GoSued () {
-		if (map[Held.posX][Held.posY].isTuerSued()) {
-			if (map[Held.posX][Held.posY].isTuerSuedLocked()) {
-				System.out.println("Diese Tür ist verschlossen.");
-			}else {
-				System.out.println("Du verlässt den Raum nach Süden.");
-				Held.posY++;
-				Spiel.BetreteRaum();
-			}
-		}else {
-			System.out.println("Dort ist kein Ausgang.");
-		}
-	}
-	
-	public static void GoWest () {
-		if (map[Held.posX][Held.posY].isTuerWest()) {
-			if (map[Held.posX][Held.posY].isTuerWestLocked()) {
-				System.out.println("Diese Tür ist verschlossen.");
-			}else {
-				System.out.println("Du verlässt den Raum nach Westen.");
-				Held.posX--;
-				Spiel.BetreteRaum();
-			}
-		}else {
-			System.out.println("Dort ist kein Ausgang.");
-		}
-	}
-	
-	public static void GoOst () {
-		if (map[Held.posX][Held.posY].isTuerOst()) {
-			if (map[Held.posX][Held.posY].isTuerOstLocked()) {
-				System.out.println("Diese Tür ist verschlossen.");
-			}else {
-				System.out.println("Du verlässt den Raum nach Osten.");
-				Held.posX++;
-				Spiel.BetreteRaum();
-			}
-		}else {
-			System.out.println("Dort ist kein Ausgang.");
-		}
-	}
 	
 	public static void UseItem(Item itemX, String befehl) {
 		itemX.Use(befehl);
@@ -155,7 +124,7 @@ public class Spiel {
 	public static void ObserveRoom() {
 		if (Held.hasSight) {
 			map[Held.posX][Held.posY].getBeschreibung();
-			System.out.println(map[Held.posX][Held.posY].CheckForDoors());
+			System.out.println(CheckForDoors());
 			map[Held.posX][Held.posY].ZeigeInventarImRaum();
 		}else {
 			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
@@ -183,14 +152,15 @@ public class Spiel {
 
 		if (befehl.toUpperCase().contains("GEH")) {
 			if (befehl.toUpperCase().contains("WEST")) {
-				Spiel.GoWest();
+				Spiel.Go(-1, 0);
 			}else if (befehl.toUpperCase().contains("OST")) {
-				Spiel.GoOst();
+				Spiel.Go(1, 0);
 			}else if (befehl.toUpperCase().contains("NORD")) {
-				Spiel.GoNord();
+				Spiel.Go(0, -1);
 			}else if (befehl.toUpperCase().contains("SÜD")) {
-				Spiel.GoSued();
+				Spiel.Go(0, 1);
 			}
+			
 		}else if (befehl.toUpperCase().contains("BENUTZE")) {
 			if(itemFromCMD != null) {
 				Spiel.UseItem(itemFromCMD, befehl);
@@ -206,13 +176,13 @@ public class Spiel {
 				Held.ZeigeGewicht();
 			}else if(befehl.toUpperCase().contains("TÜR")) {
 				if (befehl.toUpperCase().contains("WEST")) {
-					map[Held.posX][Held.posY].CheckDoor("West");
+					CheckDoor("West");
 				}else if (befehl.toUpperCase().contains("OST")) {
-					map[Held.posX][Held.posY].CheckDoor("Ost");
+					CheckDoor("Ost");
 				}else if (befehl.toUpperCase().contains("NORD")) {
-					map[Held.posX][Held.posY].CheckDoor("Nord");
+					CheckDoor("Nord");
 				}else if (befehl.toUpperCase().contains("SÜD")) {
-					map[Held.posX][Held.posY].CheckDoor("Süd");
+					CheckDoor("Süd");
 				}
 			}else if(befehl.toUpperCase().contains("INVENTAR")) {
 				Held.ZeigeInventar();
@@ -221,6 +191,7 @@ public class Spiel {
 			}else {
 				System.out.println("Was genau möchtest du dir anschauen?");
 			}
+			
 		}else if(befehl.toUpperCase().contains("HEBE")){
 			Spiel.PickupItem(itemFromCMD);
 		}else if(befehl.toUpperCase().contains("FALLEN")){
@@ -247,7 +218,7 @@ public class Spiel {
 				System.out.println("Hier warst du schon einmal.");
 			}
 			System.out.println(map[Held.posX][Held.posY].getBeschreibung());;
-			System.out.println(map[Held.posX][Held.posY].CheckForDoors());
+			System.out.println(CheckForDoors());
 			Spiel.EventItem();
 		}else {
 			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
@@ -281,20 +252,7 @@ public class Spiel {
 		return ausgabe;
 	}
 	
-	public static boolean CheckIfDoorIsThere(String Richtung) {
-		if (Richtung == "West") {
-			return map[Held.posX][Held.posY].isTuerWest();
-		}else if(Richtung == "Ost") {
-			return map[Held.posX][Held.posY].isTuerOst();
-		}else if(Richtung == "Nord") {
-			return map[Held.posX][Held.posY].isTuerNord();
-		}else if(Richtung == "Süd") {
-			return map[Held.posX][Held.posY].isTuerSued();
-		}else {
 
-			return false;
-		}
-	}
 	
 	public static void StartRaum() {
 		System.out.println(Texte.startMessage);
@@ -309,6 +267,76 @@ public class Spiel {
 		}
 	}
 	
+	public static void CheckDoor(String tuer) { // Dringend überarbeiten und ggf an die Tuer-Klasse outsourcen
+		if (tuer == "Nord") {
+			if(tueren[Held.posX][Held.posY][Held.posX][Held.posY-1] != null) {
+				if (tueren[Held.posX][Held.posY][Held.posX][Held.posY-1].isSimpleLocked()) {
+				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
+				}else {
+					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+				}
+			}else {
+				System.out.println("Hier ist keine Tür.");
+			}
+		}else if(tuer == "Süd") {
+			if(tueren[Held.posX][Held.posY][Held.posX][Held.posY+1] != null) {
+				if (tueren[Held.posX][Held.posY][Held.posX][Held.posY+1].isSimpleLocked()) {
+				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
+				}else {
+					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+				}
+			}else {
+				System.out.println("Hier ist keine Tür.");
+			}
+		}else if(tuer == "West") {
+			if(tueren[Held.posX][Held.posY][Held.posX-1][Held.posY] != null) {
+				if (tueren[Held.posX][Held.posY][Held.posX-1][Held.posY].isSimpleLocked()) {
+				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
+				}else {
+					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+				}
+			}else {
+				System.out.println("Hier ist keine Tür.");
+			}
+		}else if(tuer == "Ost") {
+			if(tueren[Held.posX][Held.posY][Held.posX+1][Held.posY] != null) {
+				if (tueren[Held.posX][Held.posY][Held.posX+1][Held.posY].isSimpleLocked()) {
+				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
+				}else {
+					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+				}
+			}else {
+				System.out.println("Hier ist keine Tür.");
+			}
+		}
+	}
+
+	public static String CheckForDoors() {	 
+		String ausgabe = "Dieser Raum hat Türen im:";
+		if (tuertargetting(Held.posX, Held.posY-1) != null) {
+			ausgabe += " Norden";
+		}
+		if (tuertargetting(Held.posX, Held.posY+1) != null) {
+			ausgabe += " Süden";
+		}
+		if (tuertargetting(Held.posX-1, Held.posY) != null) {
+			ausgabe += " Westen";
+		}
+		if (tuertargetting(Held.posX+1, Held.posY) != null) {
+			ausgabe += " Osten";
+		}
+		return ausgabe;
+	}
+	
+	public static Tuer tuertargetting (int zielraumX, int zielraumY) {
+		if (tueren[Held.posX][Held.posY][zielraumX][zielraumY] != null) {
+			return tueren[Held.posX][Held.posY][zielraumX][zielraumY];
+		}else if (tueren[zielraumX][zielraumY][Held.posX][Held.posY] != null) {
+			return tueren[zielraumX][zielraumY][Held.posX][Held.posY];
+		}else {
+			return null;
+		}
+	}
 	// Test-Methoden, können später gelöscht werden
 	
 	public static void TesteAlleItems() {
@@ -348,4 +376,77 @@ public class Spiel {
 //			}
 //		}
 //	}
+	
+//	public static void GoNord () {
+//	if (map[Held.posX][Held.posY].isTuerNord()) {
+//		if (map[Held.posX][Held.posY].isTuerNordLocked()) {
+//			System.out.println("Diese Tür ist verschlossen.");
+//		}else {
+//			System.out.println("Du verlässt den Raum nach Norden.");
+//			Held.posY--;
+//			Spiel.BetreteRaum();
+//		}
+//	}else {
+//		System.out.println("Dort ist kein Ausgang.");
+//	}
+//}
+//
+//public static void GoSued () {
+//	if (map[Held.posX][Held.posY].isTuerSued()) {
+//		if (map[Held.posX][Held.posY].isTuerSuedLocked()) {
+//			System.out.println("Diese Tür ist verschlossen.");
+//		}else {
+//			System.out.println("Du verlässt den Raum nach Süden.");
+//			Held.posY++;
+//			Spiel.BetreteRaum();
+//		}
+//	}else {
+//		System.out.println("Dort ist kein Ausgang.");
+//	}
+//}
+//
+//public static void GoWest () {
+//	if (map[Held.posX][Held.posY].isTuerWest()) {
+//		if (map[Held.posX][Held.posY].isTuerWestLocked()) {
+//			System.out.println("Diese Tür ist verschlossen.");
+//		}else {
+//			System.out.println("Du verlässt den Raum nach Westen.");
+//			Held.posX--;
+//			Spiel.BetreteRaum();
+//		}
+//	}else {
+//		System.out.println("Dort ist kein Ausgang.");
+//	}
+//}
+//
+//public static void GoOst () {
+//	if (map[Held.posX][Held.posY].isTuerOst()) {
+//		if (map[Held.posX][Held.posY].isTuerOstLocked()) {
+//			System.out.println("Diese Tür ist verschlossen.");
+//		}else {
+//			System.out.println("Du verlässt den Raum nach Osten.");
+//			Held.posX++;
+//			Spiel.BetreteRaum();
+//		}
+//	}else {
+//		System.out.println("Dort ist kein Ausgang.");
+//	}
+//}
+//	
+	
+//	public static boolean CheckIfDoorIsThere(String Richtung) {
+//	if (Richtung == "West") {
+//		return map[Held.posX][Held.posY].isTuerWest();
+//	}else if(Richtung == "Ost") {
+//		return map[Held.posX][Held.posY].isTuerOst();
+//	}else if(Richtung == "Nord") {
+//		return map[Held.posX][Held.posY].isTuerNord();
+//	}else if(Richtung == "Süd") {
+//		return map[Held.posX][Held.posY].isTuerSued();
+//	}else {
+//
+//		return false;
+//	}
+//}	
+	
 }
