@@ -11,7 +11,7 @@ public class Spiel {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		Spiel.GeneriereAlleItems();
+		//Spiel.GeneriereAlleItems();
 		//Spiel.TesteAlleItems();
 		Spiel.DefaultMap();
 		Spiel.StartingPos(1, 1);
@@ -26,17 +26,17 @@ public class Spiel {
 		// Erinnerung (X, Y, Nord, Süd, West, Ost)
 		// Erinnerung (X, Y, Nord, Süd, West, Ost, ItemID)
 		// Erinnerung (X, Y, Nord, Süd, West, Ost, NordLocked, SüdLocked, WestLocked, OstLocked)
-		map[1][1] = new Raum(1, 1, 6);
+		map[1][1] = new Raum(1, 1);	//Lampe
 		map[2][1] = new Raum(2, 1);
 		map[3][1] = new Raum(3, 1);
 		map[4][1] = new Raum(4, 1);
 		
-		map[1][2] = new Raum(1, 2, 7);
+		map[1][2] = new Raum(1, 2); //Pfeilfalle
 		map[2][2] = new Raum(2, 2);
 		map[3][2] = new Raum(3, 2);
 		map[4][2] = new Raum(4, 2);
 		
-		map[1][3] = new Raum(1, 3, 1);
+		map[1][3] = new Raum(1, 3); //Schlüssel
 		map[2][3] = new Raum(2, 3);
 		map[3][3] = new Raum(3, 3);
 		map[4][3] = new Raum(4, 3);
@@ -47,6 +47,9 @@ public class Spiel {
 		map[4][4] = new Raum(4, 4);
 		
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
+		
+		items.add(new Lampe(1, "Lampe", "Test", 1));
+		map[1][1].AddItemToRoom(items.get(0));
 	}
 	
 
@@ -76,9 +79,9 @@ public class Spiel {
 	
 	public static void UseItem(Item itemX, String befehl) {
 		itemX.Use(befehl);
-		if(itemX.isVerbrauchsItem()) {
-			Held.inventar.remove(Held.inventar.indexOf(itemX));
-		}
+//		if(itemX.isVerbrauchsItem()) {					// FEHLER!!! Entfernt jedes Item das Verbrauchbar ist, egal ob Befehl korrekt war. Überarbeiten!!!
+//			Held.inventar.remove(Held.inventar.indexOf(itemX));
+//		}
 	}
 	
 	public static void PickupItem(Item itemX) {
@@ -102,7 +105,7 @@ public class Spiel {
 			Held.inventar.remove(Held.inventar.indexOf(itemX));
 			System.out.println("Du hast " + itemX.getName() + " fallen gelassen." );
 			if (itemX.isDropEffekt()) {
-				itemX.DropActivator();
+				itemX.DropEffect();
 			}
 		}else {
 			System.out.println("Du kannst nichts fallen lassen, was du nicht besitzt.");
@@ -219,10 +222,10 @@ public class Spiel {
 			}
 			System.out.println(map[Held.posX][Held.posY].getBeschreibung());;
 			System.out.println(CheckForDoors());
-			Spiel.EventItem();
+			//Spiel.EventItem();
 		}else {
 			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
-			Spiel.EventItem();
+			//Spiel.EventItem();
 		}
 		map[Held.posX][Held.posY].setBesucht(true);
 		System.out.println("========================================");
@@ -259,13 +262,14 @@ public class Spiel {
 		map[Held.posX][Held.posY].setBesucht(true);
 	}
 
-	public static void EventItem() {
-		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
-			if (map[Held.posX][Held.posY].inventarImRaum.get(i).getName().contains("evt_")) {
-				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(map[Held.posX][Held.posY].inventarImRaum.get(i).getName());
-			}
-		}
-	}
+	// Überarbeiten wenn die Event-Items überarbeitet werden
+//	public static void EventItem() {
+//		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
+//			if (map[Held.posX][Held.posY].inventarImRaum.get(i).getName().contains("evt_")) {
+//				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(map[Held.posX][Held.posY].inventarImRaum.get(i).getName());
+//			}
+//		}
+//	}
 	
 	public static void CheckDoor(String tuer) { // Dringend überarbeiten und ggf an die Tuer-Klasse outsourcen
 		if (tuer == "Nord") {
@@ -337,6 +341,8 @@ public class Spiel {
 			return null;
 		}
 	}
+	
+	
 	// Test-Methoden, können später gelöscht werden
 	
 	public static void TesteAlleItems() {

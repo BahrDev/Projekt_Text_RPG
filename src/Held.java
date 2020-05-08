@@ -6,7 +6,7 @@ public class Held {
 	static int kraft = 5;
 	static int posX;
 	static int posY;
-	static boolean hasSight = false;
+	static boolean hasSight = false;		// Default: false
 	static boolean isAlive = true;
 	static ArrayList<Item> inventar = new ArrayList<Item>();
 	
