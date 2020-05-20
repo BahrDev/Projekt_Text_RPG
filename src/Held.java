@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
 public class Held {
-	static int leben = 5;
+	static int leben = 3;
 	static int lebenMax = 5;
 	static int kraft = 5;
+	static int armor = 0;
 	static int posX;
 	static int posY;
 	static boolean hasSight = false;		// Default: false
@@ -62,7 +63,7 @@ public class Held {
 		if (leben < lebenMax) {
 			leben += x;
 			System.out.println("Du wurdest um " + x + " Leben geheilt.");
-			Held.ZeigeInventar();
+			//Held.ZeigeInventar();
 		}else {
 			System.out.println("Du spürst keine Veränderung.");
 		}

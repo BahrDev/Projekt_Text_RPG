@@ -11,7 +11,7 @@ public class Heiltrank extends Item{
 		super.Use(befehl);
 		if(Held.leben < Held.lebenMax) {
 			this.UseEffect();
-			Held.inventar.remove(this);		// Prüfen ob dies so funktioniert
+			Held.inventar.remove(this);
 		}else {
 			System.out.println("Du bist bereits bei voller Gesundheit.");
 		}

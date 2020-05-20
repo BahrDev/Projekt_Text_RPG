@@ -8,18 +8,17 @@ public class Kompass extends Item{
 	@Override
 	public void Use(String befehl) {
 		super.Use(befehl);
-		this.UseEffect();
+		if (Held.hasSight) {
+			this.UseEffect();
+		}else {
+			System.out.println("Es ist zu dunkel um zu erkennen was dein Kompass anzeigt.");
+		}
 	}
 
 	@Override
 	public void UseEffect() {
 		super.UseEffect();
-		if (Held.hasSight) {
-			System.out.println("Deine Koordinaten: x=" + Held.posX + " y=" + Held.posY);
-		}else {
-			System.out.println("Es ist zu dunkel um zu erkennen was dein Kompass anzeigt.");
-		}
-		
+		System.out.println("Deine Koordinaten: x=" + Held.posX + " y=" + Held.posY);
 	}
 
 	

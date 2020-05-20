@@ -27,7 +27,6 @@ public class Item {
 	
 	// Methoden
 	public void Use (String befehl) {
-		
 	}
 	
 	public void Denied() {

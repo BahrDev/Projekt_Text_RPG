@@ -49,7 +49,11 @@ public class Spiel {
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
 		
 		items.add(new Lampe(1, "Lampe", "Test", 1));
+		items.add(new Heiltrank(2, "Heiltrank", "test", 1));
+		//items.add(new Heiltrank(3, "Heiltrank", "test", 1));
 		map[1][1].AddItemToRoom(items.get(0));
+		map[1][1].AddItemToRoom(items.get(1));
+		//map[1][1].AddItemToRoom(items.get(2));
 	}
 	
 
@@ -77,35 +81,40 @@ public class Spiel {
 	}
 	
 	
-	public static void UseItem(Item itemX, String befehl) {
-		itemX.Use(befehl);
-//		if(itemX.isVerbrauchsItem()) {					// FEHLER!!! Entfernt jedes Item das Verbrauchbar ist, egal ob Befehl korrekt war. Überarbeiten!!!
-//			Held.inventar.remove(Held.inventar.indexOf(itemX));
-//		}
+	public static void UseItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Inventar");
+		if (itemFromCMD != null) {
+			itemFromCMD.Use(befehl);	
+		}else {
+			System.out.println("Dieses Item befindet sich nicht in deinem Inventar.");
+		}	
 	}
 	
-	public static void PickupItem(Item itemX) {
-		if (map[Held.posX][Held.posY].inventarImRaum.contains(itemX)) {
-			if (Held.CheckIfItemFitsInventory(itemX.getWeight())) {
-				Held.inventar.add(itemX);
-				map[Held.posX][Held.posY].RemoveItemFromRoom(itemX);
-				System.out.println("Du hast " + itemX.getName() + " aufgehoben.");
+	public static void PickupItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Raum");
+
+		if (itemFromCMD != null) {
+			if (Held.CheckIfItemFitsInventory(itemFromCMD.getWeight())) {
+				Held.inventar.add(itemFromCMD);
+				map[Held.posX][Held.posY].RemoveItemFromRoom(itemFromCMD);
+				System.out.println("Du hast " + itemFromCMD.getName() + " aufgehoben.");
 			}else {
 				System.out.println("Dieses Item ist zu schwer, als dass du es noch tragen könntest.");
 			}				
 		}else {
 			System.out.println("Du kannst dieses Item hier nirgendwo finden.");
 		}
-
 	}
 	
-	public static void DropItem(Item itemX) {
-		if (Held.inventar.contains(itemX)) {
-			map[Held.posX][Held.posY].AddItemToRoom(itemX);
-			Held.inventar.remove(Held.inventar.indexOf(itemX));
-			System.out.println("Du hast " + itemX.getName() + " fallen gelassen." );
-			if (itemX.isDropEffekt()) {
-				itemX.DropEffect();
+	public static void DropItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Inventar");
+		
+		if (itemFromCMD != null) {
+			map[Held.posX][Held.posY].AddItemToRoom(itemFromCMD);
+			Held.inventar.remove(itemFromCMD);
+			System.out.println("Du hast " + itemFromCMD.getName() + " fallen gelassen." );
+			if (itemFromCMD.isDropEffekt()) {
+				itemFromCMD.DropEffect();
 			}
 		}else {
 			System.out.println("Du kannst nichts fallen lassen, was du nicht besitzt.");
@@ -151,7 +160,6 @@ public class Spiel {
 	}
 	
 	public static void BefolgeBefehl(String befehl) {
-		Item itemFromCMD = Spiel.CommandTranslaterItem(befehl);
 
 		if (befehl.toUpperCase().contains("GEH")) {
 			if (befehl.toUpperCase().contains("WEST")) {
@@ -163,15 +171,8 @@ public class Spiel {
 			}else if (befehl.toUpperCase().contains("SÜD")) {
 				Spiel.Go(0, 1);
 			}
-			
-		}else if (befehl.toUpperCase().contains("BENUTZE")) {
-			if(itemFromCMD != null) {
-				Spiel.UseItem(itemFromCMD, befehl);
-			}else {
-				System.out.println("Was genau willst du benutzen?");
-			}
-			
 		}else if (befehl.toUpperCase().contains("SCHAU")) {
+			Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Alle");
 			if (befehl.toUpperCase().contains("RAUM")) {
 				Spiel.ObserveRoom();
 			}else if (befehl.toUpperCase().contains("SELBST")) {
@@ -189,18 +190,28 @@ public class Spiel {
 				}
 			}else if(befehl.toUpperCase().contains("INVENTAR")) {
 				Held.ZeigeInventar();
-			}else if (Spiel.items.contains(itemFromCMD)) {
+			}else if (Held.inventar.contains(itemFromCMD)) {
+				System.out.println(itemFromCMD.getBeschreibung());
+			}else if (map[Held.posX][Held.posY].inventarImRaum.contains(itemFromCMD)) {
 				System.out.println(itemFromCMD.getBeschreibung());
 			}else {
 				System.out.println("Was genau möchtest du dir anschauen?");
 			}
-			
+		}else if (befehl.toUpperCase().contains("BENUTZE")) {
+			Spiel.UseItem(befehl);	
 		}else if(befehl.toUpperCase().contains("HEBE")){
-			Spiel.PickupItem(itemFromCMD);
+			Spiel.PickupItem(befehl);
 		}else if(befehl.toUpperCase().contains("FALLEN")){
-			Spiel.DropItem(itemFromCMD);
+			Spiel.DropItem(befehl);
 		}else if(befehl.toUpperCase().contains("HILF")){
 			Spiel.help();
+		}else if (befehl.toUpperCase().contains("TEST")) {
+													// Testen während der Runtime, später entfernen
+			if (befehl.toUpperCase().contains("1")) {
+				items.get(1).Use(befehl);
+			}else if (befehl.toUpperCase().contains("2")) {
+				
+			}
 		}else {
 			System.out.println("Wups, ungültiger Befehl");
 		}
@@ -237,18 +248,30 @@ public class Spiel {
 		}
 	}
 	
-	public static Item CommandTranslaterItem(String command) {
+	public static Item CommandTranslatorItem(String command, String arrayListUsed) {
 		Item ausgabe = null;
 		boolean checkForSecondItemTrue = false;
-		for (int i = 0; i < items.size(); i++) {
-			if (command.contains(items.get(i).getName())) {
+		ArrayList<Item> benutzteListe = null;
+		
+		if (arrayListUsed == "Raum") {
+			benutzteListe = map[Held.posX][Held.posY].inventarImRaum;
+		}else if (arrayListUsed == "Inventar") {
+			benutzteListe = Held.inventar;
+		}else if (arrayListUsed == "Alle") {
+			benutzteListe = items;
+		}
+		
+		for (int i = 0; i < benutzteListe.size(); i++) {
+			if (command.contains(benutzteListe.get(i).getName())) {
 				if (checkForSecondItemTrue) {
-					System.out.println("Error, Zwei Items im Befehl enthalten");
-					ausgabe = null;
-					break;
+					if (ausgabe.getName() != benutzteListe.get(i).getName()) {
+						System.out.println("Error, Zwei Items im Befehl enthalten");
+						ausgabe = null;
+						break;	
+					}
 				}else {
 					checkForSecondItemTrue = true;
-					ausgabe = items.get(i);
+					ausgabe = benutzteListe.get(i);
 				}
 			}
 		}
