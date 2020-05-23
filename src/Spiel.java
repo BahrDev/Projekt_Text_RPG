@@ -8,11 +8,12 @@ public class Spiel {
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Scanner scan = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException{
 		// TODO Auto-generated method stub
 		
-		Spiel.GeneriereAlleItems();
+		//Spiel.GeneriereAlleItems();
 		//Spiel.TesteAlleItems();
+		Spiel.GeneriereAlleItems();
 		Spiel.DefaultMap();
 		Spiel.StartingPos(1, 1);
 		Spiel.StartRaum();
@@ -22,21 +23,18 @@ public class Spiel {
 	
 	
 	// Aufbau der Karte
-	public static void DefaultMap() {
-		// Erinnerung (X, Y, Nord, Süd, West, Ost)
-		// Erinnerung (X, Y, Nord, Süd, West, Ost, ItemID)
-		// Erinnerung (X, Y, Nord, Süd, West, Ost, NordLocked, SüdLocked, WestLocked, OstLocked)
-		map[1][1] = new Raum(1, 1, 6);
+	public static void DefaultMap() throws CloneNotSupportedException{
+		map[1][1] = new Raum(1, 1, 6, 2);	//Lampe
 		map[2][1] = new Raum(2, 1);
 		map[3][1] = new Raum(3, 1);
 		map[4][1] = new Raum(4, 1);
 		
-		map[1][2] = new Raum(1, 2, 7);
+		map[1][2] = new Raum(1, 2); //Pfeilfalle
 		map[2][2] = new Raum(2, 2);
 		map[3][2] = new Raum(3, 2);
 		map[4][2] = new Raum(4, 2);
 		
-		map[1][3] = new Raum(1, 3, 1);
+		map[1][3] = new Raum(1, 3); //Schlüssel
 		map[2][3] = new Raum(2, 3);
 		map[3][3] = new Raum(3, 3);
 		map[4][3] = new Raum(4, 3);
@@ -46,7 +44,28 @@ public class Spiel {
 		map[3][4] = new Raum(3, 4);
 		map[4][4] = new Raum(4, 4);
 		
+		// Erinnerung: Tuer(raum1x, raum1y, raum2x, raum2y, simpleLocked, masterLocked)
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
+		tueren[2][1][3][1] = new Tuer(2, 1, 3, 1, false, false);
+		tueren[2][1][2][2] = new Tuer(2, 1, 2, 2, false, false);
+		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, false, false);
+		tueren[4][1][4][2] = new Tuer(4, 1, 4, 2, false, false);
+		
+		tueren[1][2][2][2] = new Tuer(1, 2, 2, 2, false, false);
+		tueren[1][2][1][3] = new Tuer(1, 2, 1, 3, false, false);
+		tueren[2][2][2][3] = new Tuer(2, 2, 2, 3, false, false);
+		tueren[3][2][4][2] = new Tuer(3, 2, 4, 2, false, false);
+		tueren[4][2][4][3] = new Tuer(4, 2, 4, 3, false, false);
+		
+		tueren[2][3][2][4] = new Tuer(2, 3, 2, 4, false, false);
+		tueren[3][3][4][3] = new Tuer(3, 3, 4, 3, false, false);
+		tueren[3][3][3][4] = new Tuer(3, 3, 3, 4, false, false);
+		tueren[4][3][4][4] = new Tuer(4, 3, 4, 4, false, false);
+
+		tueren[1][4][2][4] = new Tuer(1, 4, 2, 4, false, false);
+		tueren[2][4][3][4] = new Tuer(2, 4, 3, 4, false, false);
+		tueren[2][4][2][5] = new Tuer(2, 4, 2, 5, false, true);
+
 	}
 	
 
@@ -74,35 +93,40 @@ public class Spiel {
 	}
 	
 	
-	public static void UseItem(Item itemX, String befehl) {
-		itemX.Use(befehl);
-		if(itemX.isVerbrauchsItem()) {
-			Held.inventar.remove(Held.inventar.indexOf(itemX));
-		}
+	public static void UseItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Inventar");
+		if (itemFromCMD != null) {
+			itemFromCMD.Use(befehl);	
+		}else {
+			System.out.println("Dieses Item befindet sich nicht in deinem Inventar.");
+		}	
 	}
 	
-	public static void PickupItem(Item itemX) {
-		if (map[Held.posX][Held.posY].inventarImRaum.contains(itemX)) {
-			if (Held.CheckIfItemFitsInventory(itemX.getWeight())) {
-				Held.inventar.add(itemX);
-				map[Held.posX][Held.posY].RemoveItemFromRoom(itemX);
-				System.out.println("Du hast " + itemX.getName() + " aufgehoben.");
+	public static void PickupItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Raum");
+
+		if (itemFromCMD != null) {
+			if (Held.CheckIfItemFitsInventory(itemFromCMD.getWeight())) {
+				Held.inventar.add(itemFromCMD);
+				map[Held.posX][Held.posY].RemoveItemFromRoom(itemFromCMD);
+				System.out.println("Du hast " + itemFromCMD.getName() + " aufgehoben.");
 			}else {
 				System.out.println("Dieses Item ist zu schwer, als dass du es noch tragen könntest.");
 			}				
 		}else {
 			System.out.println("Du kannst dieses Item hier nirgendwo finden.");
 		}
-
 	}
 	
-	public static void DropItem(Item itemX) {
-		if (Held.inventar.contains(itemX)) {
-			map[Held.posX][Held.posY].AddItemToRoom(itemX);
-			Held.inventar.remove(Held.inventar.indexOf(itemX));
-			System.out.println("Du hast " + itemX.getName() + " fallen gelassen." );
-			if (itemX.isDropEffekt()) {
-				itemX.DropActivator();
+	public static void DropItem(String befehl) {
+		Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Inventar");
+		
+		if (itemFromCMD != null) {
+			map[Held.posX][Held.posY].AddItemToRoom(itemFromCMD);
+			Held.inventar.remove(itemFromCMD);
+			System.out.println("Du hast " + itemFromCMD.getName() + " fallen gelassen." );
+			if (itemFromCMD.isDropEffekt()) {
+				itemFromCMD.DropEffect();
 			}
 		}else {
 			System.out.println("Du kannst nichts fallen lassen, was du nicht besitzt.");
@@ -148,7 +172,6 @@ public class Spiel {
 	}
 	
 	public static void BefolgeBefehl(String befehl) {
-		Item itemFromCMD = Spiel.CommandTranslaterItem(befehl);
 
 		if (befehl.toUpperCase().contains("GEH")) {
 			if (befehl.toUpperCase().contains("WEST")) {
@@ -160,15 +183,8 @@ public class Spiel {
 			}else if (befehl.toUpperCase().contains("SÜD")) {
 				Spiel.Go(0, 1);
 			}
-			
-		}else if (befehl.toUpperCase().contains("BENUTZE")) {
-			if(itemFromCMD != null) {
-				Spiel.UseItem(itemFromCMD, befehl);
-			}else {
-				System.out.println("Was genau willst du benutzen?");
-			}
-			
 		}else if (befehl.toUpperCase().contains("SCHAU")) {
+			Item itemFromCMD = Spiel.CommandTranslatorItem(befehl, "Alle");
 			if (befehl.toUpperCase().contains("RAUM")) {
 				Spiel.ObserveRoom();
 			}else if (befehl.toUpperCase().contains("SELBST")) {
@@ -186,18 +202,28 @@ public class Spiel {
 				}
 			}else if(befehl.toUpperCase().contains("INVENTAR")) {
 				Held.ZeigeInventar();
-			}else if (Spiel.items.contains(itemFromCMD)) {
+			}else if (Held.inventar.contains(itemFromCMD)) {
+				System.out.println(itemFromCMD.getBeschreibung());
+			}else if (map[Held.posX][Held.posY].inventarImRaum.contains(itemFromCMD)) {
 				System.out.println(itemFromCMD.getBeschreibung());
 			}else {
 				System.out.println("Was genau möchtest du dir anschauen?");
 			}
-			
+		}else if (befehl.toUpperCase().contains("BENUTZE")) {
+			Spiel.UseItem(befehl);	
 		}else if(befehl.toUpperCase().contains("HEBE")){
-			Spiel.PickupItem(itemFromCMD);
+			Spiel.PickupItem(befehl);
 		}else if(befehl.toUpperCase().contains("FALLEN")){
-			Spiel.DropItem(itemFromCMD);
+			Spiel.DropItem(befehl);
 		}else if(befehl.toUpperCase().contains("HILF")){
 			Spiel.help();
+		}else if (befehl.toUpperCase().contains("TEST")) {
+													// Testen während der Runtime, später entfernen
+			if (befehl.toUpperCase().contains("1")) {
+				items.get(1).Use(befehl);
+			}else if (befehl.toUpperCase().contains("2")) {
+				
+			}
 		}else {
 			System.out.println("Wups, ungültiger Befehl");
 		}
@@ -219,53 +245,77 @@ public class Spiel {
 			}
 			System.out.println(map[Held.posX][Held.posY].getBeschreibung());;
 			System.out.println(CheckForDoors());
-			Spiel.EventItem();
+			//Spiel.EventItem();
 		}else {
 			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
-			Spiel.EventItem();
+			//Spiel.EventItem();
 		}
 		map[Held.posX][Held.posY].setBesucht(true);
 		System.out.println("========================================");
 	}
 	
 	public static void GeneriereAlleItems() {
-		for (int i = 0; i < Texte.itemNamen.size(); i++) {
-			items.add(new Item(i, Texte.itemNamen.get(i), Texte.itemBeschreibung.get(i), Texte.itemGewichte.get(i)));
-		}
+		items.add(new Schluessel());
+		items.add(new Heiltrank());
+		items.add(new Schild());
+		items.add(new Flusen());
+		items.add(new Kompass());
+		items.add(new Lampe());
 	}
 	
-	public static Item CommandTranslaterItem(String command) {
+	public static Item CommandTranslatorItem(String command, String arrayListUsed) {
 		Item ausgabe = null;
 		boolean checkForSecondItemTrue = false;
-		for (int i = 0; i < items.size(); i++) {
-			if (command.contains(items.get(i).getName())) {
+		ArrayList<Item> benutzteListe = null;
+		
+		if (arrayListUsed == "Raum") {
+			benutzteListe = map[Held.posX][Held.posY].inventarImRaum;
+		}else if (arrayListUsed == "Inventar") {
+			benutzteListe = Held.inventar;
+		}else if (arrayListUsed == "Alle") {
+			benutzteListe = items;
+		}
+		
+		for (int i = 0; i < benutzteListe.size(); i++) {
+			if (command.contains(benutzteListe.get(i).getName())) {
 				if (checkForSecondItemTrue) {
-					System.out.println("Error, Zwei Items im Befehl enthalten");
-					ausgabe = null;
-					break;
+					if (ausgabe.getName() != benutzteListe.get(i).getName()) {
+						System.out.println("Error, Zwei Items im Befehl enthalten");
+						ausgabe = null;
+						break;	
+					}
 				}else {
 					checkForSecondItemTrue = true;
-					ausgabe = items.get(i);
+					ausgabe = benutzteListe.get(i);
 				}
 			}
 		}
 		return ausgabe;
 	}
 	
-
+	public static Item CloneItemSelect(int itemID) {
+		Item ausgabeItem = null;
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getItemID() == itemID) {
+				ausgabeItem = items.get(i);
+			}
+		}
+		return ausgabeItem;
+	}
 	
-	public static void StartRaum() {
+ 	public static void StartRaum() {
 		System.out.println(Texte.startMessage);
 		map[Held.posX][Held.posY].setBesucht(true);
 	}
 
-	public static void EventItem() {
-		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
-			if (map[Held.posX][Held.posY].inventarImRaum.get(i).getName().contains("evt_")) {
-				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(map[Held.posX][Held.posY].inventarImRaum.get(i).getName());
-			}
-		}
-	}
+	// Überarbeiten wenn die Event-Items überarbeitet werden
+//	public static void EventItem() {
+//		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
+//			if (map[Held.posX][Held.posY].inventarImRaum.get(i).getName().contains("evt_")) {
+//				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(map[Held.posX][Held.posY].inventarImRaum.get(i).getName());
+//			}
+//		}
+//	}
 	
 	public static void CheckDoor(String tuer) { // Dringend überarbeiten und ggf an die Tuer-Klasse outsourcen
 		if (tuer == "Nord") {
@@ -337,6 +387,8 @@ public class Spiel {
 			return null;
 		}
 	}
+	
+	
 	// Test-Methoden, können später gelöscht werden
 	
 	public static void TesteAlleItems() {

@@ -1,12 +1,13 @@
 import java.util.ArrayList;
 
 public class Held {
-	static int leben = 5;
+	static int leben = 3;
 	static int lebenMax = 5;
 	static int kraft = 5;
+	static int armor = 0;
 	static int posX;
 	static int posY;
-	static boolean hasSight = false;
+	static boolean hasSight = true;		// Default: false
 	static boolean isAlive = true;
 	static ArrayList<Item> inventar = new ArrayList<Item>();
 	
@@ -36,9 +37,9 @@ public class Held {
 	}
 	
 	public static void ZeigeInventar() {
-		String ausgabe = "Dein Inventar besteht aus diesen Items: ";
+		String ausgabe = "Dein Inventar besteht aus diesen Items: \n";
 		for (int i = 0; i < inventar.size(); i++) {
-			ausgabe+= Held.inventar.get(i).getName() + " ";
+			ausgabe+= "- " + Held.inventar.get(i).getName() + "\n";
 		}
 		System.out.println(ausgabe);
 	}
@@ -62,7 +63,7 @@ public class Held {
 		if (leben < lebenMax) {
 			leben += x;
 			System.out.println("Du wurdest um " + x + " Leben geheilt.");
-			Held.ZeigeInventar();
+			//Held.ZeigeInventar();
 		}else {
 			System.out.println("Du spürst keine Veränderung.");
 		}
