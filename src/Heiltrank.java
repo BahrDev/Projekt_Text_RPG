@@ -1,10 +1,20 @@
 
-public class Heiltrank extends Item{
-
+public class Heiltrank extends Item implements Cloneable{
+	
 	public Heiltrank(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
+		super(itemID = 2, name = "Heiltrank", "Verweis Einfügen!", weight = 1);
 		this.setVerbrauchsItem(true);
 	}
+	
+	public Heiltrank() {
+		super();
+		this.setItemID(2);
+		this.setName("Heiltrank");
+		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setWeight(1);
+		this.setVerbrauchsItem(true);
+	}
+	
 
 	@Override
 	public void Use(String befehl) {
@@ -25,6 +35,11 @@ public class Heiltrank extends Item{
 		Held.Heilung(1);
 	}
 
+
+	@Override
+	public Object clone () throws CloneNotSupportedException{
+		return super.clone();
+	}
 	
 	
 	

@@ -7,7 +7,7 @@ public class Held {
 	static int armor = 0;
 	static int posX;
 	static int posY;
-	static boolean hasSight = false;		// Default: false
+	static boolean hasSight = true;		// Default: false
 	static boolean isAlive = true;
 	static ArrayList<Item> inventar = new ArrayList<Item>();
 	
@@ -37,9 +37,9 @@ public class Held {
 	}
 	
 	public static void ZeigeInventar() {
-		String ausgabe = "Dein Inventar besteht aus diesen Items: ";
+		String ausgabe = "Dein Inventar besteht aus diesen Items: \n";
 		for (int i = 0; i < inventar.size(); i++) {
-			ausgabe+= Held.inventar.get(i).getName() + " ";
+			ausgabe+= "- " + Held.inventar.get(i).getName() + "\n";
 		}
 		System.out.println(ausgabe);
 	}

@@ -1,13 +1,20 @@
 
-public class Schluessel extends Item{
+public class Schluessel extends Item implements Cloneable{
 
 	
-	
-	
-	
+
 	
 	public Schluessel(int itemID, String name, String beschreibung, int weight) {
 		super(itemID, name, beschreibung, weight);
+		this.setVerbrauchsItem(true);
+	}
+	
+	public Schluessel() {
+		super();
+		this.setItemID(1);
+		this.setName("Schlüssel");
+		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setWeight(1);
 		this.setVerbrauchsItem(true);
 	}
 
@@ -43,6 +50,10 @@ public class Schluessel extends Item{
 	}
 
 	
+	@Override
+	public Object clone () throws CloneNotSupportedException{
+		return super.clone();
+	}
 	
 	
 	

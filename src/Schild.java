@@ -7,6 +7,14 @@ public class Schild extends Item{
 		super(itemID, name, beschreibung, weight);
 		this.setDropEffekt(true);
 	}
+	
+	public Schild() {
+		super();
+		this.setItemID(3);
+		this.setName("Schild");
+		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setWeight(2);
+	}
 
 	@Override
 	public void Use(String befehl) {

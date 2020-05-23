@@ -8,11 +8,12 @@ public class Spiel {
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Scanner scan = new Scanner(System.in);
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws CloneNotSupportedException{
 		// TODO Auto-generated method stub
 		
 		//Spiel.GeneriereAlleItems();
 		//Spiel.TesteAlleItems();
+		Spiel.GeneriereAlleItems();
 		Spiel.DefaultMap();
 		Spiel.StartingPos(1, 1);
 		Spiel.StartRaum();
@@ -22,11 +23,8 @@ public class Spiel {
 	
 	
 	// Aufbau der Karte
-	public static void DefaultMap() {
-		// Erinnerung (X, Y, Nord, Süd, West, Ost)
-		// Erinnerung (X, Y, Nord, Süd, West, Ost, ItemID)
-		// Erinnerung (X, Y, Nord, Süd, West, Ost, NordLocked, SüdLocked, WestLocked, OstLocked)
-		map[1][1] = new Raum(1, 1);	//Lampe
+	public static void DefaultMap() throws CloneNotSupportedException{
+		map[1][1] = new Raum(1, 1, 6, 2);	//Lampe
 		map[2][1] = new Raum(2, 1);
 		map[3][1] = new Raum(3, 1);
 		map[4][1] = new Raum(4, 1);
@@ -46,14 +44,28 @@ public class Spiel {
 		map[3][4] = new Raum(3, 4);
 		map[4][4] = new Raum(4, 4);
 		
+		// Erinnerung: Tuer(raum1x, raum1y, raum2x, raum2y, simpleLocked, masterLocked)
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
+		tueren[2][1][3][1] = new Tuer(2, 1, 3, 1, false, false);
+		tueren[2][1][2][2] = new Tuer(2, 1, 2, 2, false, false);
+		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, false, false);
+		tueren[4][1][4][2] = new Tuer(4, 1, 4, 2, false, false);
 		
-		items.add(new Lampe(1, "Lampe", "Test", 1));
-		items.add(new Heiltrank(2, "Heiltrank", "test", 1));
-		//items.add(new Heiltrank(3, "Heiltrank", "test", 1));
-		map[1][1].AddItemToRoom(items.get(0));
-		map[1][1].AddItemToRoom(items.get(1));
-		//map[1][1].AddItemToRoom(items.get(2));
+		tueren[1][2][2][2] = new Tuer(1, 2, 2, 2, false, false);
+		tueren[1][2][1][3] = new Tuer(1, 2, 1, 3, false, false);
+		tueren[2][2][2][3] = new Tuer(2, 2, 2, 3, false, false);
+		tueren[3][2][4][2] = new Tuer(3, 2, 4, 2, false, false);
+		tueren[4][2][4][3] = new Tuer(4, 2, 4, 3, false, false);
+		
+		tueren[2][3][2][4] = new Tuer(2, 3, 2, 4, false, false);
+		tueren[3][3][4][3] = new Tuer(3, 3, 4, 3, false, false);
+		tueren[3][3][3][4] = new Tuer(3, 3, 3, 4, false, false);
+		tueren[4][3][4][4] = new Tuer(4, 3, 4, 4, false, false);
+
+		tueren[1][4][2][4] = new Tuer(1, 4, 2, 4, false, false);
+		tueren[2][4][3][4] = new Tuer(2, 4, 3, 4, false, false);
+		tueren[2][4][2][5] = new Tuer(2, 4, 2, 5, false, true);
+
 	}
 	
 
@@ -243,9 +255,12 @@ public class Spiel {
 	}
 	
 	public static void GeneriereAlleItems() {
-		for (int i = 0; i < Texte.itemNamen.size(); i++) {
-			items.add(new Item(i, Texte.itemNamen.get(i), Texte.itemBeschreibung.get(i), Texte.itemGewichte.get(i)));
-		}
+		items.add(new Schluessel());
+		items.add(new Heiltrank());
+		items.add(new Schild());
+		items.add(new Flusen());
+		items.add(new Kompass());
+		items.add(new Lampe());
 	}
 	
 	public static Item CommandTranslatorItem(String command, String arrayListUsed) {
@@ -278,9 +293,17 @@ public class Spiel {
 		return ausgabe;
 	}
 	
-
+	public static Item CloneItemSelect(int itemID) {
+		Item ausgabeItem = null;
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).getItemID() == itemID) {
+				ausgabeItem = items.get(i);
+			}
+		}
+		return ausgabeItem;
+	}
 	
-	public static void StartRaum() {
+ 	public static void StartRaum() {
 		System.out.println(Texte.startMessage);
 		map[Held.posX][Held.posY].setBesucht(true);
 	}

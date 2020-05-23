@@ -10,18 +10,32 @@ public class Raum {
 	private String beschreibung = "";
 	
 
-public Raum(int x, int y) {
-		super();
-		this.x = x;
-		this.y = y;
+	public Raum(int x, int y) throws CloneNotSupportedException {
+		this(x, y, null, null, null);
+		}
+	
+	public Raum(int x, int y, Integer itemID) throws CloneNotSupportedException{
+		this(x, y, itemID, null, null);
+		}
+	
+	public Raum(int x, int y, Integer itemID, Integer itemID2) throws CloneNotSupportedException{
+		this(x, y, itemID, itemID2, null);
 	}
-
-public Raum(int x, int y, Integer itemID) {
+	
+	public Raum(int x, int y, Integer itemID, Integer itemID2, Integer itemID3) throws CloneNotSupportedException{
 		super();
 		this.x = x;
 		this.y = y;
-		this.AddItemToRoom(Spiel.items.get(itemID));
-		this.hasItem =true;
+		if (itemID != null) {
+			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID).clone());
+			this.hasItem =true;
+		}
+		if (itemID2 != null) {
+			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID2).clone());
+		}
+		if (itemID3 != null) {
+			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID3).clone());
+		}
 	}
 
 
@@ -39,9 +53,9 @@ public Raum(int x, int y, Integer itemID) {
 	}
 	
 	public void ZeigeInventarImRaum() {
-		String ausgabe = "In diesem Raum findest du folgende Items: ";
+		String ausgabe = "In diesem Raum findest du folgende Items: \n";
 		for (int i = 0; i < this.inventarImRaum.size(); i++) {
-			ausgabe+= this.inventarImRaum.get(i).getName() + " ";
+			ausgabe+= "- " + this.inventarImRaum.get(i).getName() + "\n";
 		}
 		System.out.println(ausgabe);
 	}

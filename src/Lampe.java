@@ -8,6 +8,14 @@ public class Lampe extends Item{
 		super(itemID, name, beschreibung, weight);
 		this.setDropEffekt(true);
 	}
+	
+	public Lampe() {
+		super();
+		this.setItemID(6);
+		this.setName("Lampe");
+		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setWeight(1);
+	}
 
 	@Override
 	public void Use(String befehl) {

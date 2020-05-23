@@ -1,5 +1,4 @@
-
-public class Item {
+public class Item implements Cloneable{
 	
 	// Attribute
 	private Integer itemID;
@@ -23,6 +22,19 @@ public class Item {
 		}
 	}
 	
+	public Item() {
+		super();
+//		if(this.name.contains("evt_")) {
+//			this.eventItem = true;
+//		}
+	}
+	
+	@Override
+	public Object clone () throws CloneNotSupportedException{
+		return super.clone();
+	}
+	
+	
 	
 	
 	// Methoden
@@ -42,6 +54,8 @@ public class Item {
 		
 	}
 
+
+	
 	
 	
 	// Getter und Setter
@@ -100,6 +114,10 @@ public class Item {
 	public void setDropEffekt(boolean dropEffekt) {
 		this.dropEffekt = dropEffekt;
 	}
+
+
+
+
 
 	
 	

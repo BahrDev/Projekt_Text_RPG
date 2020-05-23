@@ -4,6 +4,14 @@ public class Kompass extends Item{
 	public Kompass(int itemID, String name, String beschreibung, int weight) {
 		super(itemID, name, beschreibung, weight);
 	}
+	
+	public Kompass() {
+		super();
+		this.setItemID(5);
+		this.setName("Kompass");
+		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setWeight(1);
+	}
 
 	@Override
 	public void Use(String befehl) {
