@@ -1,0 +1,35 @@
+[33mcommit 619aa6100bbc5bd2886328dd9f50ca3af43fcf07[m[33m ([m[1;36mHEAD -> [m[1;32mItemsSindSubklassen[m[33m)[m
+Author: Stefan Bahr <Bahr.JavaDev@gmail.com>
+Date:   Sat May 23 12:47:56 2020 +0200
+
+    Item-Generation überarbeitet, alle Türen der Map hinzugefügt
+
+[33mcommit 2d17829e455600bad3d57a9e792796ca459408e0[m
+Author: Stefan Bahr <Bahr.JavaDev@gmail.com>
+Date:   Wed May 20 15:54:59 2020 +0200
+
+    Itemauswahl überarbeitet, Item Flusen und Item Schild hinzugefügt.
+
+[33mcommit dfa142e2375c08290f551219639c5cbb6f9ec301[m
+Author: Stefan Bahr <Bahr.JavaDev@gmail.com>
+Date:   Fri May 8 18:34:47 2020 +0200
+
+    Items sind nun Subklassen unter der Superklase Item.
+
+[33mcommit 20a25c157cd9ccf47403190ef3bf42ae76834724[m[33m ([m[1;31morigin/TürenSindKlassen[m[33m, [m[1;32mTürenSindKlassen[m[33m)[m
+Author: Stefan Bahr <Bahr.JavaDev@gmail.com>
+Date:   Sun May 3 18:43:58 2020 +0200
+
+    Türen sind nun eigenständige Klassen. Abhängige Programmteile wurden angepasst. Koordinatensystem überarbeitet um outofbound-error vorzubeugen.
+
+[33mcommit c2ff23cfa2f4f075a9b6356921efa9ff36df87f0[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: BahrDev <64733257+BahrDev@users.noreply.github.com>
+Date:   Sun May 3 14:37:19 2020 +0200
+
+    Create README.md
+
+[33mcommit d19c2eee912d4181bd0e3b3fd00510b77b9151da[m
+Author: Stefan Bahr <Bahr.JavaDev@gmail.com>
+Date:   Sun May 3 14:22:54 2020 +0200
+
+    Pre-Git-Version dem Repository hinzugefügt.

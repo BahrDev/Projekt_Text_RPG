@@ -7,6 +7,8 @@ public class Spiel {
 	public static Tuer[][][][] tueren = new Tuer[6][6][6][6];
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Scanner scan = new Scanner(System.in);
+	public static Event eventItem = null;
+	
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
 		// TODO Auto-generated method stub
@@ -29,7 +31,7 @@ public class Spiel {
 		map[3][1] = new Raum(3, 1);
 		map[4][1] = new Raum(4, 1);
 		
-		map[1][2] = new Raum(1, 2); //Pfeilfalle
+		map[1][2] = new Raum(1, 2, 51); //Pfeilfalle
 		map[2][2] = new Raum(2, 2);
 		map[3][2] = new Raum(3, 2);
 		map[4][2] = new Raum(4, 2);
@@ -68,8 +70,16 @@ public class Spiel {
 
 	}
 	
-
-
+	public static void GeneriereAlleItems() {
+		items.add(new Schluessel());
+		items.add(new Heiltrank());
+		items.add(new Schild());
+		items.add(new Flusen());
+		items.add(new Kompass());
+		items.add(new Lampe());
+		items.add(new evt_Pfeilfalle());
+		items.add(new evt_Bodenstacheln());
+	}
 	
 	
 	// Aktionen des Spielers
@@ -83,6 +93,7 @@ public class Spiel {
 				System.out.println("Diese Tür ist verschlossen.");
 			}else {
 				System.out.println("Du verlässt den Raum nach Süden."); //Richtungsangabe als Methode schreiben
+				Spiel.Event("Leave");
 				Held.posX = zielraumX;
 				Held.posY = zielraumY;
 				Spiel.BetreteRaum();
@@ -167,11 +178,28 @@ public class Spiel {
 	}
 	
 	public static void UserEingabe() {
-		String eingabe = scan.nextLine();
-		Spiel.BefolgeBefehl(eingabe);
+		String eingabe = scan.nextLine().toUpperCase();
+		
+		if (eventItem != null) {
+			if (eventItem.triggerEffect(eingabe) != true) {
+				Spiel.BefolgeBefehl(eingabe);
+			}else {
+				if (Held.isAlive) {
+					Spiel.UserEingabe();
+				}else {
+					System.out.println(Texte.deathMessage);
+					scan.close();
+				}
+			}
+		}else {
+			Spiel.BefolgeBefehl(eingabe);
+		}
+		
+
 	}
 	
 	public static void BefolgeBefehl(String befehl) {
+		
 
 		if (befehl.toUpperCase().contains("GEH")) {
 			if (befehl.toUpperCase().contains("WEST")) {
@@ -222,7 +250,7 @@ public class Spiel {
 			if (befehl.toUpperCase().contains("1")) {
 				items.get(1).Use(befehl);
 			}else if (befehl.toUpperCase().contains("2")) {
-				
+				System.out.println(eventItem);
 			}
 		}else {
 			System.out.println("Wups, ungültiger Befehl");
@@ -245,22 +273,13 @@ public class Spiel {
 			}
 			System.out.println(map[Held.posX][Held.posY].getBeschreibung());;
 			System.out.println(CheckForDoors());
-			//Spiel.EventItem();
+			Spiel.Event("Enter");
 		}else {
 			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
-			//Spiel.EventItem();
+			Spiel.Event("Enter");
 		}
 		map[Held.posX][Held.posY].setBesucht(true);
 		System.out.println("========================================");
-	}
-	
-	public static void GeneriereAlleItems() {
-		items.add(new Schluessel());
-		items.add(new Heiltrank());
-		items.add(new Schild());
-		items.add(new Flusen());
-		items.add(new Kompass());
-		items.add(new Lampe());
 	}
 	
 	public static Item CommandTranslatorItem(String command, String arrayListUsed) {
@@ -309,13 +328,13 @@ public class Spiel {
 	}
 
 	// Überarbeiten wenn die Event-Items überarbeitet werden
-//	public static void EventItem() {
-//		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
-//			if (map[Held.posX][Held.posY].inventarImRaum.get(i).getName().contains("evt_")) {
-//				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(map[Held.posX][Held.posY].inventarImRaum.get(i).getName());
-//			}
-//		}
-//	}
+	public static void Event(String trigger) {
+		for (int i = 0; i < map[Held.posX][Held.posY].inventarImRaum.size(); i++) {
+			if (map[Held.posX][Held.posY].inventarImRaum.get(i).isEventItem()) {
+				map[Held.posX][Held.posY].inventarImRaum.get(i).Use(trigger);
+			}
+		}
+	}
 	
 	public static void CheckDoor(String tuer) { // Dringend überarbeiten und ggf an die Tuer-Klasse outsourcen
 		if (tuer == "Nord") {
