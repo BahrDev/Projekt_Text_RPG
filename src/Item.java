@@ -23,10 +23,6 @@ public class Item implements Cloneable{
 	}
 	
 	public Item() {
-		super();
-//		if(this.name.contains("evt_")) {
-//			this.eventItem = true;
-//		}
 	}
 	
 	@Override
