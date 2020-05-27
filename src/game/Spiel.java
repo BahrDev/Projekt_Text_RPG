@@ -8,7 +8,7 @@ import events.*;
 public class Spiel {
 	
 	private static Raum[][] map = new Raum[6][6];
-	private static Tuer[][][][] tueren = new Tuer[6][6][6][6];
+	private static Tuer[][][][] tueren = new Tuer[7][7][7][7];
 	private static ArrayList<Item> items = new ArrayList<Item>();
 	private static Scanner scan = new Scanner(System.in);
 	private static Event eventItem = null;
@@ -35,7 +35,7 @@ public class Spiel {
 		map[3][1] = new Raum(3, 1);
 		map[4][1] = new Raum(4, 1);
 		
-		map[1][2] = new Raum(1, 2, 51); //Pfeilfalle
+		map[1][2] = new Raum(1, 2, 1); //Pfeilfalle
 		map[2][2] = new Raum(2, 2);
 		map[3][2] = new Raum(3, 2);
 		map[4][2] = new Raum(4, 2);
@@ -46,9 +46,11 @@ public class Spiel {
 		map[4][3] = new Raum(4, 3);
 		
 		map[1][4] = new Raum(1, 4);
-		map[2][4] = new Raum(2, 4);
+		map[2][4] = new Raum(2, 4, 7);
 		map[3][4] = new Raum(3, 4);
 		map[4][4] = new Raum(4, 4);
+		
+		map[2][5] = new Raum(2, 5);
 		
 		// Erinnerung: Tuer(raum1x, raum1y, raum2x, raum2y, simpleLocked, masterLocked)
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
@@ -57,7 +59,7 @@ public class Spiel {
 		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, false, false);
 		tueren[4][1][4][2] = new Tuer(4, 1, 4, 2, false, false);
 		
-		tueren[1][2][2][2] = new Tuer(1, 2, 2, 2, false, false);
+		tueren[1][2][2][2] = new Tuer(1, 2, 2, 2, true, false);
 		tueren[1][2][1][3] = new Tuer(1, 2, 1, 3, false, false);
 		tueren[2][2][2][3] = new Tuer(2, 2, 2, 3, false, false);
 		tueren[3][2][4][2] = new Tuer(3, 2, 4, 2, false, false);
@@ -81,6 +83,7 @@ public class Spiel {
 		items.add(new Flusen());
 		items.add(new Kompass());
 		items.add(new Lampe());
+		items.add(new MeisterSchluessel());
 		items.add(new evt_Pfeilfalle());
 		items.add(new evt_Bodenstacheln());
 	}
