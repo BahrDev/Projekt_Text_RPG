@@ -21,8 +21,8 @@ public class Schluessel extends Item implements Cloneable{
 	}
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
+	public void use(String befehl) {
+		super.use(befehl);
 		if (befehl.toUpperCase().contains("WEST")) {
 			this.UseEffect(-1, 0);
 		}else if (befehl.toUpperCase().contains("OST")) {
@@ -37,13 +37,13 @@ public class Schluessel extends Item implements Cloneable{
 	}
 
 	@Override
-	public void DropEffect() {
-		super.DropEffect();
+	public void dropEffect() {
+		super.dropEffect();
 	}
 
 	public void UseEffect(int zielraumX, int zielraumY) {
-		if(Spiel.tuertargetting(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isSimpleLocked()) {
-			Spiel.tuertargetting(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setSimpleLocked(false);
+		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isSimpleLocked()) {
+			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setSimpleLocked(false);
 			System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
 			Held.getInventar().remove(this);		// Prüfen ob dies so funktioniert
 		}else {

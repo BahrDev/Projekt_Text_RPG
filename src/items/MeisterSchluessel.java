@@ -24,8 +24,8 @@ public class MeisterSchluessel extends Item{
 	}
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
+	public void use(String befehl) {
+		super.use(befehl);
 		if (befehl.toUpperCase().contains("WEST")) {
 			this.UseEffect(-1, 0);
 		}else if (befehl.toUpperCase().contains("OST")) {
@@ -40,13 +40,13 @@ public class MeisterSchluessel extends Item{
 	}
 
 	@Override
-	public void DropEffect() {
-		super.DropEffect();
+	public void dropEffect() {
+		super.dropEffect();
 	}
 
 	public void UseEffect(int zielraumX, int zielraumY) {
-		if(Spiel.tuertargetting(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isMasterLocked()) {
-			Spiel.tuertargetting(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setMasterLocked(false);
+		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isMasterLocked()) {
+			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setMasterLocked(false);
 			System.out.println("Du drehst den enormen Schlüssel in der massiven Tür. Der Boden bebt, als sich die Tür nach innen öffnet.");
 			Held.getInventar().remove(this);
 		}else {

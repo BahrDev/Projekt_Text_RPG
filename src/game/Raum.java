@@ -31,29 +31,29 @@ public class Raum {
 		this.x = x;
 		this.y = y;
 		if (itemID != null) {
-			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID).clone());
+			this.addItemToRoom((Item)Spiel.cloneItemSelect(itemID).clone());
 			this.hasItem =true;
 		}
 		if (itemID2 != null) {
-			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID2).clone());
+			this.addItemToRoom((Item)Spiel.cloneItemSelect(itemID2).clone());
 		}
 		if (itemID3 != null) {
-			this.AddItemToRoom((Item)Spiel.CloneItemSelect(itemID3).clone());
+			this.addItemToRoom((Item)Spiel.cloneItemSelect(itemID3).clone());
 		}
 	}
 
 
 // -------------------- Methoden --------------------
 
-	public void AddItemToRoom(Item itemX) {
+	public void addItemToRoom(Item itemX) {
 		this.inventarImRaum.add(itemX);
 	}
 	
-	public void RemoveItemFromRoom(Item itemX) {
+	public void removeItemFromRoom(Item itemX) {
 		this.inventarImRaum.remove(itemX);
 	}
 	
-	public void ZeigeInventarImRaum() {
+	public void zeigeInventarImRaum() {
 		String ausgabe = "In diesem Raum findest du folgende Items: \n";
 		for (int i = 0; i < this.inventarImRaum.size(); i++) {
 			ausgabe+= "- " + this.inventarImRaum.get(i).getName() + "\n";

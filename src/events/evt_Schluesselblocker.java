@@ -1,20 +1,20 @@
 package events;
-import items.*;
-import game.*;
 
-public class evt_Bodenstacheln extends Item implements Event{
+import game.Spiel;
+import items.Item;
 
-	private String trigger = "GEHE";
-	private String saveTrigger = "SCHWARZ";
-	private int schaden = 1;
+public class evt_Schluesselblocker extends Item implements Event {
+
+	private String trigger = "SCHLÜSSEL";
 	
-	public evt_Bodenstacheln() {
+	public evt_Schluesselblocker() {
 		super();
-		this.setItemID(51);
-		this.setName("evt_Bodenstacheln");
+		this.setItemID(53);
+		this.setName("evt_Schluesselblocker");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
+	
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
@@ -33,6 +33,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 		}
 	}
 	
+	
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
@@ -45,14 +46,28 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger) && !befehl.contains(saveTrigger)) {
+		if (befehl.contains(trigger)) {
 			System.out.println(this.getBeschreibung());
-			Held.schaden(this.schaden);
 			return true;
 		}else {
 			return false;
 		}
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

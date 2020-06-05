@@ -19,14 +19,14 @@ public class Schild extends Item{
 	}
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
-		this.UseEffect();
+	public void use(String befehl) {
+		super.use(befehl);
+		this.useEffect();
 	}
 
 	@Override
-	public void DropEffect() {
-		super.DropEffect();
+	public void dropEffect() {
+		super.dropEffect();
 		if (this.isEquiped) {
 			Held.setArmor(Held.getArmor() - 1);
 			this.isEquiped = false;
@@ -35,8 +35,8 @@ public class Schild extends Item{
 	}
 
 	@Override
-	public void UseEffect() {
-		super.UseEffect();
+	public void useEffect() {
+		super.useEffect();
 		if (this.isEquiped) {
 			Held.setArmor(Held.getArmor() - 1);
 			this.isEquiped = false;

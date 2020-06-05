@@ -8,6 +8,7 @@ public class Tuer {
 	private int raum2y;
 	private boolean simpleLocked;
 	private boolean masterLocked;
+	private boolean destroyed = false;
 	
 	
 	public Tuer(int raum1x, int raum1y, int raum2x, int raum2y, boolean simpleLocked, boolean masterLocked) {
@@ -20,8 +21,6 @@ public class Tuer {
 		this.masterLocked = masterLocked;
 	}
 
-	
-	
 
 	public int getRaum1x() {
 		return raum1x;
@@ -81,7 +80,17 @@ public class Tuer {
 	public void setMasterLocked(boolean masterLocked) {
 		this.masterLocked = masterLocked;
 	}
-	
+
+
+	public boolean isDestroyed() {
+		return destroyed;
+	}
+
+
+	public void setDestroyed(boolean destroyed) {
+		this.destroyed = destroyed;
+	}
+
 	
 	
 	

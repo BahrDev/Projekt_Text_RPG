@@ -1,17 +1,17 @@
 package events;
-import items.*;
-import game.*;
 
-public class evt_Bodenstacheln extends Item implements Event{
+import game.Held;
+import game.Spiel;
+import items.Item;
+
+public class evt_BodenlosesLoch extends Item implements Event{
 
 	private String trigger = "GEHE";
-	private String saveTrigger = "SCHWARZ";
-	private int schaden = 1;
 	
-	public evt_Bodenstacheln() {
+	public evt_BodenlosesLoch() {
 		super();
-		this.setItemID(51);
-		this.setName("evt_Bodenstacheln");
+		this.setItemID(55);
+		this.setName("evt_BodenlosesLoch");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
@@ -45,14 +45,16 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger) && !befehl.contains(saveTrigger)) {
+		if (befehl.contains(trigger)) {
 			System.out.println(this.getBeschreibung());
-			Held.schaden(this.schaden);
+			Held.setAlive(false);
 			return true;
 		}else {
 			return false;
 		}
 	}
+	
+	
 	
 	
 }

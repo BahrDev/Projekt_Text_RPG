@@ -1,20 +1,22 @@
 package events;
-import items.*;
-import game.*;
 
-public class evt_Bodenstacheln extends Item implements Event{
+import game.Held;
+import game.Spiel;
+import items.Item;
 
-	private String trigger = "GEHE";
-	private String saveTrigger = "SCHWARZ";
-	private int schaden = 1;
+public class evt_TuerVernichter extends Item implements Event{
+
+	private boolean depleted = false;
+	private String itemToTrigger = "LAMPE";
 	
-	public evt_Bodenstacheln() {
+	public evt_TuerVernichter() {
 		super();
-		this.setItemID(51);
-		this.setName("evt_Bodenstacheln");
+		this.setItemID(54);
+		this.setName("evt_TuerVernichter");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
+	
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
@@ -33,9 +35,20 @@ public class evt_Bodenstacheln extends Item implements Event{
 		}
 	}
 	
+	
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
+		if(this.depleted == false) {
+			System.out.println(this.getBeschreibung());
+			Spiel.getLastDoorUsed().setDestroyed(true);
+			for (int i = 0; i < Held.getInventar().size(); i++) {
+				if (Held.getInventar().get(i).getName() == itemToTrigger) {
+					Held.getInventar().get(i).useFromExternal();
+				}
+			}
+			this.depleted = true;
+		}
 	}
 
 	@Override
@@ -45,14 +58,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger) && !befehl.contains(saveTrigger)) {
-			System.out.println(this.getBeschreibung());
-			Held.schaden(this.schaden);
-			return true;
-		}else {
-			return false;
-		}
+		return false;
 	}
-	
 	
 }
