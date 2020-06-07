@@ -10,7 +10,7 @@ public class Held {
 	private static int armor = 0;
 	private static int posX;
 	private static int posY;
-	private static boolean hasSight = true;		// Default: false
+	private static boolean hasSight = false;		// Default: false
 	private static boolean isAlive = true;
 	private static ArrayList<Item> inventar = new ArrayList<Item>();
 	
@@ -75,12 +75,17 @@ public class Held {
 	}
 	
 	public static void schaden(int x) {
-		leben -= x;
-		System.out.println("Du hast " + x + " Schaden bekommen.");
-		if (Held.checkIfDead()) {
-			Held.isAlive = false;
+		int schaden = x - armor;
+		if (schaden <= 0) {
+			System.out.println("Mit deinem Schild konntest du den Schaden abwehren.");
 		}else {
-			Held.zeigeLeben();
+			leben -= x;
+			System.out.println("Du hast " + x + " Schaden bekommen.");
+			if (Held.checkIfDead()) {
+				Held.isAlive = false;
+			}else {
+				Held.zeigeLeben();
+			}
 		}
 	}
 	

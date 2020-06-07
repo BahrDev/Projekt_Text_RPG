@@ -3,23 +3,23 @@ package items;
 import game.Held;
 import game.Spiel;
 
-public class MeisterSchluessel extends Item{
+public class Arkankubus extends Item{
 	
 
 	
 
 	
-	public MeisterSchluessel(int itemID, String name, String beschreibung, int weight) {
+	public Arkankubus(int itemID, String name, String beschreibung, int weight) {
 		super(itemID, name, beschreibung, weight);
 		this.setVerbrauchsItem(true);
 	}
 	
-	public MeisterSchluessel() {
+	public Arkankubus() {
 		super();
 		this.setItemID(7);
-		this.setName("Meister-Schlüssel");
+		this.setName("Arkankubus");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
-		this.setWeight(1);
+		this.setWeight(2);
 		this.setVerbrauchsItem(true);
 	}
 

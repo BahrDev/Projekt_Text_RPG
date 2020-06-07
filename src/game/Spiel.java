@@ -13,6 +13,7 @@ public class Spiel {
 	private static Scanner scan = new Scanner(System.in);
 	private static Event eventItem = null;
 	private static Tuer lastDoorUsed = null;
+	public static boolean eventsSichtbar = false;
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
 		// TODO Auto-generated method stub
@@ -30,32 +31,33 @@ public class Spiel {
 	
 	// -------------------- Game Data --------------------
 	public static void generiereDefaultMap() throws CloneNotSupportedException{
-		map[1][1] = new Raum(1, 1, 6, 2);	//Lampe
-		map[2][1] = new Raum(2, 1);
-		map[3][1] = new Raum(3, 1);
-		map[4][1] = new Raum(4, 1);
-		
-		map[1][2] = new Raum(1, 2, 52); //Pfeilfalle
-		map[2][2] = new Raum(2, 2);
-		map[3][2] = new Raum(3, 2);
-		map[4][2] = new Raum(4, 2);
-		
-		map[1][3] = new Raum(1, 3); //Schlüssel
-		map[2][3] = new Raum(2, 3);
-		map[3][3] = new Raum(3, 3);
-		map[4][3] = new Raum(4, 3);
-		
-		map[1][4] = new Raum(1, 4);
-		map[2][4] = new Raum(2, 4, 7);
-		map[3][4] = new Raum(3, 4);
-		map[4][4] = new Raum(4, 4);
-		
-		map[2][5] = new Raum(2, 5);
+		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
+		map[1][1] = new Raum(1, 1, 6);
+		map[2][1] = new Raum(2, 1, 5, 23);
+		map[3][1] = new Raum(3, 1, 7, 4);	// Master-Rätsel hier einbauen, MS(7) nur bei Lösung
+		map[4][1] = new Raum(4, 1, 1);		// Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		//
+		map[1][2] = new Raum(1, 2, 21);
+		map[2][2] = new Raum(2, 2, 4, 2);	//Rätsel hier einbauen, Heiltrank(2) nur bei Lösung
+		map[3][2] = new Raum(3, 2);			//EE-Rätsel
+		map[4][2] = new Raum(4, 2, 4, 22);	
+		//
+		map[1][3] = new Raum(1, 3, 1);
+		map[2][3] = new Raum(2, 3, 1);
+		map[3][3] = new Raum(3, 3, 25, 4);
+		map[4][3] = new Raum(4, 3, 21);
+		//
+		map[1][4] = new Raum(1, 4, 3);
+		map[2][4] = new Raum(2, 4, 22);
+		map[3][4] = new Raum(3, 4, 24);
+		map[4][4] = new Raum(4, 4, 1);		//Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		//
+		map[2][5] = new Raum(2, 5, 20);
 		
 		// Erinnerung: Tuer(raum1x, raum1y, raum2x, raum2y, simpleLocked, masterLocked)
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
-		tueren[2][1][3][1] = new Tuer(2, 1, 3, 1, false, false);
-		tueren[2][1][2][2] = new Tuer(2, 1, 2, 2, false, false);
+		tueren[2][1][3][1] = new Tuer(2, 1, 3, 1, true, false);
+		tueren[2][1][2][2] = new Tuer(2, 1, 2, 2, true, false);
 		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, false, false);
 		tueren[4][1][4][2] = new Tuer(4, 1, 4, 2, false, false);
 		
@@ -70,7 +72,7 @@ public class Spiel {
 		tueren[3][3][3][4] = new Tuer(3, 3, 3, 4, false, false);
 		tueren[4][3][4][4] = new Tuer(4, 3, 4, 4, false, false);
 
-		tueren[1][4][2][4] = new Tuer(1, 4, 2, 4, false, false);
+		tueren[1][4][2][4] = new Tuer(1, 4, 2, 4, true, false);
 		tueren[2][4][3][4] = new Tuer(2, 4, 3, 4, false, false);
 		tueren[2][4][2][5] = new Tuer(2, 4, 2, 5, false, true);
 	}
@@ -82,9 +84,13 @@ public class Spiel {
 		items.add(new Flusen());
 		items.add(new Kompass());
 		items.add(new Lampe());
-		items.add(new MeisterSchluessel());
-		items.add(new evt_Pfeilfalle());
+		items.add(new Arkankubus());
+		items.add(new evt_Finale());
 		items.add(new evt_Bodenstacheln());
+		items.add(new evt_Pfeilfalle());
+		items.add(new evt_BodenlosesLoch());
+		items.add(new evt_Schluesselblocker());
+		items.add(new evt_TuerVernichter());
 	}
 	
 	
@@ -99,10 +105,10 @@ public class Spiel {
 				System.out.println("Du brauchst einen besonderen Schlüssel um diese Tür zu öffnen.");
 			}else if (aktuelleTuer.isSimpleLocked()) {
 				System.out.println("Diese Tür ist verschlossen.");
-			}else if (aktuelleTuer.isSimpleLocked()) {
+			}else if (aktuelleTuer.isDestroyed()) {
 				System.out.println("Dieser Durchgang ist verschüttet.");
 			}else {
-				System.out.println("Du verlässt den Raum nach Süden."); //Richtungsangabe als Methode schreiben
+				System.out.println("Du verlässt den Raum in Richtung " + Spiel.richtungsWandler(laufrichtungX, laufrichtungY) + "."); 
 				Spiel.event("Leave");
 				Held.setPosX(zielraumX);
 				Held.setPosY(zielraumY);
@@ -181,6 +187,26 @@ public class Spiel {
 		
 	}
 	
+	public static void observeDoor(int richtungX, int richtungY) {
+		int zielTuerX = Held.getPosX() + richtungX;
+		int zielTuerY = Held.getPosY() + richtungY;
+		Tuer aktuelleTuer = null;
+		aktuelleTuer = tuerTargetter(zielTuerX, zielTuerY);
+		if (aktuelleTuer != null) {
+			if (aktuelleTuer.isMasterLocked()) {
+				System.out.println("Ein komplexes und großes Schloss ist in der Tür verbaut. Du kannst nicht hindurch sehen und vermutest, dass du hierfür einen ganz besonderen Schlüssel benötigst.");
+			}else if (aktuelleTuer.isSimpleLocked()) {
+				System.out.println("Diese Tür ist mit einem simplen Schloss versehen. Du brauchst einen Schlüssel um sie zu öffnen.");
+			}else if (aktuelleTuer.isDestroyed()) {
+				System.out.println("Dieser Durchgang ist verschüttet und daher unpassierbar.");
+			}else {
+				System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+			}
+		}else {
+			System.out.println("Dort ist kein Ausgang.");
+		}
+	}
+	
 	// -------------------- Spiel-Mechaniken --------------------
 	public static void setStartingPos(int x, int y) {
 		Held.setPosX(x);
@@ -230,13 +256,13 @@ public class Spiel {
 				Held.zeigeGewicht();
 			}else if(befehl.contains("TÜR")) {
 				if (befehl.contains("WEST")) {
-					checkDoor("West");
+					Spiel.observeDoor(-1, 0);
 				}else if (befehl.contains("OST")) {
-					checkDoor("Ost");
+					Spiel.observeDoor(1, 0);
 				}else if (befehl.contains("NORD")) {
-					checkDoor("Nord");
+					Spiel.observeDoor(0, -1);
 				}else if (befehl.contains("SÜD")) {
-					checkDoor("Süd");
+					Spiel.observeDoor(0, 1);
 				}else {
 					System.out.println("Welche Tür möchtest du dir denn ansehen?");
 				}
@@ -311,7 +337,7 @@ public class Spiel {
 			if (command.contains(benutzteListe.get(i).getName().toUpperCase())) {
 				if (checkForSecondItemTrue) {
 					if (ausgabe.getName() != benutzteListe.get(i).getName().toUpperCase()) {
-						System.out.println("Error, Zwei Items im Befehl enthalten");
+						System.out.println("Du kannst immer nur ein Item auf einmal benutzen.");
 						ausgabe = null;
 						break;	
 					}
@@ -347,50 +373,6 @@ public class Spiel {
 		}
 	}
 	
-	public static void checkDoor(String tuer) { // Dringend überarbeiten und ggf an die Tuer-Klasse outsourcen
-		if (tuer == "Nord") {
-			if(tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()][Held.getPosY()-1] != null) {
-				if (tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()][Held.getPosY()-1].isSimpleLocked()) {
-				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
-				}else {
-					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if(tuer == "Süd") {
-			if(tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()][Held.getPosY()+1] != null) {
-				if (tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()][Held.getPosY()+1].isSimpleLocked()) {
-				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
-				}else {
-					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if(tuer == "West") {
-			if(tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()-1][Held.getPosY()] != null) {
-				if (tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()-1][Held.getPosY()].isSimpleLocked()) {
-				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
-				}else {
-					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}else if(tuer == "Ost") {
-			if(tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()+1][Held.getPosY()] != null) {
-				if (tueren[Held.getPosX()][Held.getPosY()][Held.getPosX()+1][Held.getPosY()].isSimpleLocked()) {
-				System.out.println("Diese Tür ist verschlossen. Ein Schlüssel könnte sie öffnen.");
-				}else {
-					System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
-				}
-			}else {
-				System.out.println("Hier ist keine Tür.");
-			}
-		}
-	}
-
 	public static String checkForDoors() {	 
 		String ausgabe = "Dieser Raum hat Türen im:";
 		if (tuerTargetter(Held.getPosX(), Held.getPosY()-1) != null) {
@@ -416,6 +398,20 @@ public class Spiel {
 		}else {
 			return null;
 		}
+	}
+	
+	public static String richtungsWandler(int richtungX, int richtungY) {
+		String ausgabe = "";
+		if (richtungX == -1) {
+			ausgabe = "Westen";
+		}else if (richtungX == 1) {
+			ausgabe = "Osten";
+		}else if (richtungY == -1) {
+			ausgabe = "Norden";
+		}else if (richtungY == 1) {
+			ausgabe = "Süden";
+		}
+		return ausgabe;
 	}
 	
 	public static Event getEventItem() {

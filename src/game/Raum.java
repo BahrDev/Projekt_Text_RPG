@@ -55,8 +55,19 @@ public class Raum {
 	
 	public void zeigeInventarImRaum() {
 		String ausgabe = "In diesem Raum findest du folgende Items: \n";
+		boolean itemsVorhanden = false;
 		for (int i = 0; i < this.inventarImRaum.size(); i++) {
-			ausgabe+= "- " + this.inventarImRaum.get(i).getName() + "\n";
+			if (this.inventarImRaum.get(i).getName().contains("evt_")) {
+				if (Spiel.eventsSichtbar == false) {
+					continue;
+				}
+			}else {
+				ausgabe+= "- " + this.inventarImRaum.get(i).getName() + "\n";
+				itemsVorhanden = true;
+			}
+		}
+		if (itemsVorhanden == false) {
+			ausgabe = "Du kannst in diesem Raum nichts von Wert finden.";
 		}
 		System.out.println(ausgabe);
 	}

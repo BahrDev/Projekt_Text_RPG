@@ -7,11 +7,11 @@ import items.Item;
 public class evt_TuerVernichter extends Item implements Event{
 
 	private boolean depleted = false;
-	private String itemToTrigger = "LAMPE";
+	private String itemToTrigger = "Lampe";
 	
 	public evt_TuerVernichter() {
 		super();
-		this.setItemID(54);
+		this.setItemID(24);
 		this.setName("evt_TuerVernichter");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);

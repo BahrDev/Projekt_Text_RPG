@@ -10,7 +10,7 @@ public class evt_BodenlosesLoch extends Item implements Event{
 	
 	public evt_BodenlosesLoch() {
 		super();
-		this.setItemID(55);
+		this.setItemID(25);
 		this.setName("evt_BodenlosesLoch");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
@@ -45,10 +45,14 @@ public class evt_BodenlosesLoch extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger)) {
-			System.out.println(this.getBeschreibung());
-			Held.setAlive(false);
-			return true;
+		if (Held.isHasSight() == false) {
+			if (befehl.contains(trigger)) {
+				System.out.println(this.getBeschreibung());
+				Held.setAlive(false);
+				return true;
+			}else {
+				return false;
+			}
 		}else {
 			return false;
 		}

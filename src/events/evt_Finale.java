@@ -7,7 +7,7 @@ public class evt_Finale extends Item implements Event {
 	
 	public evt_Finale() {
 		super();
-		this.setItemID(50);
+		this.setItemID(20);
 		this.setName("evt_Finale");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);

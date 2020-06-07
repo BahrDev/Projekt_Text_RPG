@@ -9,7 +9,7 @@ public class evt_Schluesselblocker extends Item implements Event {
 	
 	public evt_Schluesselblocker() {
 		super();
-		this.setItemID(53);
+		this.setItemID(23);
 		this.setName("evt_Schluesselblocker");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);

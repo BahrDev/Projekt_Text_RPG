@@ -10,7 +10,7 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 
 	public evt_Pfeilfalle() {
 		super();
-		this.setItemID(52);
+		this.setItemID(22);
 		this.setName("evt_Pfeilfalle");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);

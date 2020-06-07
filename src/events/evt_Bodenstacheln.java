@@ -10,9 +10,9 @@ public class evt_Bodenstacheln extends Item implements Event{
 	
 	public evt_Bodenstacheln() {
 		super();
-		this.setItemID(51);
+		this.setItemID(21);
 		this.setName("evt_Bodenstacheln");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setBeschreibung("Verweiß auf Sekundär-Beschreibung einfügen");
 		this.setEventItem(true);
 	}
 
@@ -53,6 +53,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 			return false;
 		}
 	}
+	
 	
 	
 }
