@@ -17,14 +17,14 @@ public class Flusen extends Item{
 	}
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
-		this.UseEffect();
+	public void use(String befehl) {
+		super.use(befehl);
+		this.useEffect();
 	}
 
 	@Override
-	public void UseEffect() {
-		super.UseEffect();
+	public void useEffect() {
+		super.useEffect();
 		System.out.println("Die sind zu nicht zu gebrauchen.");
 	}
 	

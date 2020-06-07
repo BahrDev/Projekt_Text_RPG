@@ -19,10 +19,10 @@ public class Heiltrank extends Item implements Cloneable{
 	
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
+	public void use(String befehl) {
+		super.use(befehl);
 		if(Held.getLeben() < Held.getLebenMax()) {
-			this.UseEffect();
+			this.useEffect();
 			Held.getInventar().remove(this);
 		}else {
 			System.out.println("Du bist bereits bei voller Gesundheit.");
@@ -32,9 +32,9 @@ public class Heiltrank extends Item implements Cloneable{
 	}
 
 	@Override
-	public void UseEffect() {
-		super.UseEffect();
-		Held.Heilung(1);
+	public void useEffect() {
+		super.useEffect();
+		Held.heilung(1);
 	}
 
 

@@ -1,22 +1,25 @@
 package items;
-import game.*;
 
-public class Schluessel extends Item implements Cloneable{
+import game.Held;
+import game.Spiel;
 
+public class Arkankubus extends Item{
 	
 
 	
-	public Schluessel(int itemID, String name, String beschreibung, int weight) {
+
+	
+	public Arkankubus(int itemID, String name, String beschreibung, int weight) {
 		super(itemID, name, beschreibung, weight);
 		this.setVerbrauchsItem(true);
 	}
 	
-	public Schluessel() {
+	public Arkankubus() {
 		super();
-		this.setItemID(1);
-		this.setName("Schlüssel");
+		this.setItemID(7);
+		this.setName("Arkankubus");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
-		this.setWeight(1);
+		this.setWeight(2);
 		this.setVerbrauchsItem(true);
 	}
 
@@ -42,10 +45,10 @@ public class Schluessel extends Item implements Cloneable{
 	}
 
 	public void UseEffect(int zielraumX, int zielraumY) {
-		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isSimpleLocked()) {
-			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setSimpleLocked(false);
-			System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-			Held.getInventar().remove(this);		// Prüfen ob dies so funktioniert
+		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isMasterLocked()) {
+			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setMasterLocked(false);
+			System.out.println("Du drehst den enormen Schlüssel in der massiven Tür. Der Boden bebt, als sich die Tür nach innen öffnet.");
+			Held.getInventar().remove(this);
 		}else {
 			System.out.println("Diese Tür ist nicht verschlossen.");
 		}
@@ -58,14 +61,5 @@ public class Schluessel extends Item implements Cloneable{
 	}
 	
 	
-	
-	
-	
-	
 
-	
-	
-	
-	
-	
 }

@@ -1,26 +1,23 @@
 package events;
-import game.Held;
+
 import game.Spiel;
-import items.*;
+import items.Item;
 
-public class evt_Pfeilfalle extends Item implements Cloneable, Event{
-
-	private boolean depleted = false;
-	private int schaden = 1;
-
-	public evt_Pfeilfalle() {
+public class evt_Finale extends Item implements Event {
+	
+	public evt_Finale() {
 		super();
-		this.setItemID(22);
-		this.setName("evt_Pfeilfalle");
+		this.setItemID(20);
+		this.setName("evt_Finale");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
-
+	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		return super.clone();
 	}
-
+	
 	@Override
 	public void use(String trigger) {
 		super.use(trigger);
@@ -32,18 +29,15 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 			this.triggerEffect(trigger);
 		}
 	}
-	
+
+
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
-		if(this.depleted == false) {
-			System.out.println("Pfeilfalle erfolgreich ausgeführt");
-			Held.schaden(this.schaden);
-			this.depleted = true;
-		}
+		System.out.println("Spiel-Ende-Text-Verweis hier einfügen");
+		Spiel.closeScan();
+		System.out.println("Credits hier abspielen lassen");
 	}
-
-
 
 	@Override
 	public void leaveEffect() {
@@ -55,15 +49,4 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 		return false;
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

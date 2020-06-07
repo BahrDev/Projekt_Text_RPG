@@ -1,17 +1,17 @@
 package events;
+
 import game.Held;
 import game.Spiel;
-import items.*;
+import items.Item;
 
-public class evt_Pfeilfalle extends Item implements Cloneable, Event{
+public class evt_BodenlosesLoch extends Item implements Event{
 
-	private boolean depleted = false;
-	private int schaden = 1;
-
-	public evt_Pfeilfalle() {
+	private String trigger = "GEHE";
+	
+	public evt_BodenlosesLoch() {
 		super();
-		this.setItemID(22);
-		this.setName("evt_Pfeilfalle");
+		this.setItemID(25);
+		this.setName("evt_BodenlosesLoch");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
@@ -36,14 +36,7 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
-		if(this.depleted == false) {
-			System.out.println("Pfeilfalle erfolgreich ausgeführt");
-			Held.schaden(this.schaden);
-			this.depleted = true;
-		}
 	}
-
-
 
 	@Override
 	public void leaveEffect() {
@@ -52,16 +45,18 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		return false;
+		if (Held.isHasSight() == false) {
+			if (befehl.contains(trigger)) {
+				System.out.println(this.getBeschreibung());
+				Held.setAlive(false);
+				return true;
+			}else {
+				return false;
+			}
+		}else {
+			return false;
+		}
 	}
-
-
-	
-	
-	
-	
-	
-	
 	
 	
 	

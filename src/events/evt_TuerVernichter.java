@@ -1,20 +1,22 @@
 package events;
+
 import game.Held;
 import game.Spiel;
-import items.*;
+import items.Item;
 
-public class evt_Pfeilfalle extends Item implements Cloneable, Event{
+public class evt_TuerVernichter extends Item implements Event{
 
 	private boolean depleted = false;
-	private int schaden = 1;
-
-	public evt_Pfeilfalle() {
+	private String itemToTrigger = "Lampe";
+	
+	public evt_TuerVernichter() {
 		super();
-		this.setItemID(22);
-		this.setName("evt_Pfeilfalle");
+		this.setItemID(24);
+		this.setName("evt_TuerVernichter");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
+	
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
@@ -33,17 +35,21 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 		}
 	}
 	
+	
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
 		if(this.depleted == false) {
-			System.out.println("Pfeilfalle erfolgreich ausgeführt");
-			Held.schaden(this.schaden);
+			System.out.println(this.getBeschreibung());
+			Spiel.getLastDoorUsed().setDestroyed(true);
+			for (int i = 0; i < Held.getInventar().size(); i++) {
+				if (Held.getInventar().get(i).getName() == itemToTrigger) {
+					Held.getInventar().get(i).useFromExternal();
+				}
+			}
 			this.depleted = true;
 		}
 	}
-
-
 
 	@Override
 	public void leaveEffect() {
@@ -54,16 +60,5 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 	public boolean triggerEffect(String befehl) {
 		return false;
 	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

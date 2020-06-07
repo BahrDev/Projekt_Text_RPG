@@ -17,18 +17,18 @@ public class Kompass extends Item{
 	}
 
 	@Override
-	public void Use(String befehl) {
-		super.Use(befehl);
+	public void use(String befehl) {
+		super.use(befehl);
 		if (Held.isHasSight()) {
-			this.UseEffect();
+			this.useEffect();
 		}else {
 			System.out.println("Es ist zu dunkel um zu erkennen was dein Kompass anzeigt.");
 		}
 	}
 
 	@Override
-	public void UseEffect() {
-		super.UseEffect();
+	public void useEffect() {
+		super.useEffect();
 		System.out.println("Deine Koordinaten: x=" + Held.getPosX() + " y=" + Held.getPosY());
 	}
 

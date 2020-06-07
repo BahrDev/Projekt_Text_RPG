@@ -10,7 +10,7 @@ public class Held {
 	private static int armor = 0;
 	private static int posX;
 	private static int posY;
-	private static boolean hasSight = true;		// Default: false
+	private static boolean hasSight = false;		// Default: false
 	private static boolean isAlive = true;
 	private static ArrayList<Item> inventar = new ArrayList<Item>();
 	
@@ -18,8 +18,8 @@ public class Held {
 	
 	
 	
-	public static boolean CheckIfItemFitsInventory(int GewichtItem) {
-		if ((Held.InventoryWeight() + GewichtItem) > Held.kraft) {
+	public static boolean checkIfItemFitsInventory(int GewichtItem) {
+		if ((Held.inventoryWeight() + GewichtItem) > Held.kraft) {
 			return false;
 		}else {
 			return true;
@@ -27,11 +27,11 @@ public class Held {
 			
 	}
 	
-	public static void ZeigeGewicht() {
-		System.out.println("Belastung: " + Held.InventoryWeight() + "/" + kraft);
+	public static void zeigeGewicht() {
+		System.out.println("Belastung: " + Held.inventoryWeight() + "/" + kraft);
 	}
 	
-	public static int InventoryWeight() {
+	public static int inventoryWeight() {
 		int weight = 0;
 		for (int i = 0; i < inventar.size(); i++) {
 			weight += Held.inventar.get(i).getWeight();
@@ -39,7 +39,7 @@ public class Held {
 		return weight;
 	}
 	
-	public static void ZeigeInventar() {
+	public static void zeigeInventar() {
 		String ausgabe = "Dein Inventar besteht aus diesen Items: \n";
 		for (int i = 0; i < inventar.size(); i++) {
 			ausgabe+= "- " + Held.inventar.get(i).getName() + "\n";
@@ -47,7 +47,7 @@ public class Held {
 		System.out.println(ausgabe);
 	}
 	
-	public static boolean CheckInventoryForItem(String itemName) {
+	public static boolean checkInventoryForItem(String itemName) {
 		boolean ausgabe = false;
 		for (int i = 0; i < Held.inventar.size(); i++) {
 			if (Held.inventar.get(i).getName() == itemName) {
@@ -57,11 +57,11 @@ public class Held {
 		return ausgabe;
 	}
 		
-	public static void ZeigeLeben() {
+	public static void zeigeLeben() {
 		System.out.println("Leben: " + leben + "/" + lebenMax);
 	}
 	
-	public static void Heilung(int x) {
+	public static void heilung(int x) {
 		if (leben < lebenMax) {
 			leben += x;
 			System.out.println("Du wurdest um " + x + " Leben geheilt.");
@@ -74,17 +74,22 @@ public class Held {
 		
 	}
 	
-	public static void Schaden(int x) {
-		leben -= x;
-		System.out.println("Du hast " + x + " Schaden bekommen.");
-		if (Held.CheckIfDead()) {
-			Held.isAlive = false;
+	public static void schaden(int x) {
+		int schaden = x - armor;
+		if (schaden <= 0) {
+			System.out.println("Mit deinem Schild konntest du den Schaden abwehren.");
 		}else {
-			Held.ZeigeLeben();
+			leben -= x;
+			System.out.println("Du hast " + x + " Schaden bekommen.");
+			if (Held.checkIfDead()) {
+				Held.isAlive = false;
+			}else {
+				Held.zeigeLeben();
+			}
 		}
 	}
 	
-	public static boolean CheckIfDead() {
+	public static boolean checkIfDead() {
 		if (leben <=0) {
 			return true;
 		}else {
@@ -92,7 +97,7 @@ public class Held {
 		}
 	}
 	
-	public static void KraftRauf(int x) {
+	public static void kraftRauf(int x) {
 		kraft += x;
 		System.out.println("Du fühlst dich stärker.");
 	}

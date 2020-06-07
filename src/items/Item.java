@@ -36,23 +36,25 @@ public class Item implements Cloneable{
 	
 	
 	// Methoden
-	public void Use (String befehl) {
+	public void use (String befehl) {
 	}
 	
-	public void Denied() {
+	public void denied() {
 		System.out.println("Dies hat keine Auswirkungen.");
 	}
 	
 	
-	public void DropEffect () {
+	public void dropEffect () {
 		
 	}
 	
-	public void UseEffect () {
+	public void useEffect () {
 		
 	}
 
-
+	public void useFromExternal () {
+		
+	}
 	
 	
 	

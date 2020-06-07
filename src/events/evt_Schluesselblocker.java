@@ -1,20 +1,20 @@
 package events;
-import game.Held;
+
 import game.Spiel;
-import items.*;
+import items.Item;
 
-public class evt_Pfeilfalle extends Item implements Cloneable, Event{
+public class evt_Schluesselblocker extends Item implements Event {
 
-	private boolean depleted = false;
-	private int schaden = 1;
-
-	public evt_Pfeilfalle() {
+	private String trigger = "SCHLÜSSEL";
+	
+	public evt_Schluesselblocker() {
 		super();
-		this.setItemID(22);
-		this.setName("evt_Pfeilfalle");
+		this.setItemID(23);
+		this.setName("evt_Schluesselblocker");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
 	}
+	
 
 	@Override
 	public Object clone() throws CloneNotSupportedException {
@@ -33,17 +33,11 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 		}
 	}
 	
+	
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
-		if(this.depleted == false) {
-			System.out.println("Pfeilfalle erfolgreich ausgeführt");
-			Held.schaden(this.schaden);
-			this.depleted = true;
-		}
 	}
-
-
 
 	@Override
 	public void leaveEffect() {
@@ -52,10 +46,20 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		return false;
+		if (befehl.contains(trigger)) {
+			System.out.println(this.getBeschreibung());
+			return true;
+		}else {
+			return false;
+		}
 	}
 
-
+	
+	
+	
+	
+	
+	
 	
 	
 	

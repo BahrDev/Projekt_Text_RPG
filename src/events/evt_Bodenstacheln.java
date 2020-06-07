@@ -5,13 +5,14 @@ import game.*;
 public class evt_Bodenstacheln extends Item implements Event{
 
 	private String trigger = "GEHE";
-	private boolean depleted = false;
+	private String saveTrigger = "SCHWARZ";
+	private int schaden = 1;
 	
 	public evt_Bodenstacheln() {
 		super();
-		this.setItemID(51);
+		this.setItemID(21);
 		this.setName("evt_Bodenstacheln");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setBeschreibung("Verweiß auf Sekundär-Beschreibung einfügen");
 		this.setEventItem(true);
 	}
 
@@ -21,8 +22,8 @@ public class evt_Bodenstacheln extends Item implements Event{
 	}
 
 	@Override
-	public void Use(String trigger) {
-		super.Use(trigger);
+	public void use(String trigger) {
+		super.use(trigger);
 		if (trigger == "Enter") {
 			this.enterEffect();
 		}else if (trigger == "Leave") {
@@ -34,9 +35,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 	
 	@Override
 	public void enterEffect() {
-		if (this.depleted == false) {
-			Spiel.setEventItem(this);
-		}
+		Spiel.setEventItem(this);
 	}
 
 	@Override
@@ -46,16 +45,15 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger)) {
+		if (befehl.contains(trigger) && !befehl.contains(saveTrigger)) {
 			System.out.println(this.getBeschreibung());
-			Held.Schaden(1);
-			this.depleted = true;
-			Spiel.setEventItem(null);
+			Held.schaden(this.schaden);
 			return true;
 		}else {
 			return false;
 		}
 	}
+	
 	
 	
 }
