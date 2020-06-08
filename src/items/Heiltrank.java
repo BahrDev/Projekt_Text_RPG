@@ -1,12 +1,12 @@
 package items;
 import game.*;
 
-public class Heiltrank extends Item implements Cloneable{
+public class Heiltrank extends Item{
 	
-	public Heiltrank(int itemID, String name, String beschreibung, int weight) {
-		super(itemID = 2, name = "Heiltrank", "Verweis Einfügen!", weight = 1);
-		this.setVerbrauchsItem(true);
-	}
+//	public Heiltrank(int itemID, String name, String beschreibung, int weight) {
+//		super(itemID = 2, name = "Heiltrank", "Verweis Einfügen!", weight = 1);
+//		this.setVerbrauchsItem(true);
+//	}
 	
 	public Heiltrank() {
 		super();

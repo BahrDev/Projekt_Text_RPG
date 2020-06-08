@@ -16,10 +16,7 @@ public class Spiel {
 	public static boolean eventsSichtbar = false;
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
-		// TODO Auto-generated method stub
-		
-		//Spiel.GeneriereAlleItems();
-		//Spiel.TesteAlleItems();
+
 		Spiel.generiereAlleItems();
 		Spiel.generiereDefaultMap();
 		Spiel.setStartingPos(1, 1);
@@ -34,11 +31,11 @@ public class Spiel {
 		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
 		map[1][1] = new Raum(1, 1, 6);
 		map[2][1] = new Raum(2, 1, 5, 23);
-		map[3][1] = new Raum(3, 1, 7, 4);	// Master-Rätsel hier einbauen, MS(7) nur bei Lösung
-		map[4][1] = new Raum(4, 1, 1);		// Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		map[3][1] = new Raum(3, 1, 4, 29);	// Master-Rätsel hier einbauen, MS(7) nur bei Lösung
+		map[4][1] = new Raum(4, 1, 28);		// Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
 		//
 		map[1][2] = new Raum(1, 2, 21);
-		map[2][2] = new Raum(2, 2, 4, 2);	//Rätsel hier einbauen, Heiltrank(2) nur bei Lösung
+		map[2][2] = new Raum(2, 2, 4, 26);	//Rätsel hier einbauen, Heiltrank(2) nur bei Lösung
 		map[3][2] = new Raum(3, 2);			//EE-Rätsel
 		map[4][2] = new Raum(4, 2, 4, 22);	
 		//
@@ -50,7 +47,7 @@ public class Spiel {
 		map[1][4] = new Raum(1, 4, 3);
 		map[2][4] = new Raum(2, 4, 22);
 		map[3][4] = new Raum(3, 4, 24);
-		map[4][4] = new Raum(4, 4, 1);		//Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		map[4][4] = new Raum(4, 4, 27);		//Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
 		//
 		map[2][5] = new Raum(2, 5, 20);
 		
@@ -85,12 +82,18 @@ public class Spiel {
 		items.add(new Kompass());
 		items.add(new Lampe());
 		items.add(new Arkankubus());
+		items.add(new Zuckerwasser());
 		items.add(new evt_Finale());
 		items.add(new evt_Bodenstacheln());
 		items.add(new evt_Pfeilfalle());
 		items.add(new evt_BodenlosesLoch());
 		items.add(new evt_Schluesselblocker());
 		items.add(new evt_TuerVernichter());
+		items.add(new evt_TrankPuzzle());
+		items.add(new evt_GiftPfeilPuzzle());
+		items.add(new evt_ArmFallenPuzzle());
+		items.add(new evt_SphinxPuzzle());
+		
 	}
 	
 	
@@ -125,7 +128,7 @@ public class Spiel {
 		if (itemFromCMD != null) {
 			itemFromCMD.use(befehl);	
 		}else {
-			System.out.println("Dieses Item befindet sich nicht in deinem Inventar.");
+			System.out.println("Welches Item meinst du genau?.");
 		}	
 	}
 	
@@ -336,8 +339,10 @@ public class Spiel {
 		for (int i = 0; i < benutzteListe.size(); i++) {
 			if (command.contains(benutzteListe.get(i).getName().toUpperCase())) {
 				if (checkForSecondItemTrue) {
-					if (ausgabe.getName() != benutzteListe.get(i).getName().toUpperCase()) {
+					if (ausgabe.getName() != benutzteListe.get(i).getName()) {
 						System.out.println("Du kannst immer nur ein Item auf einmal benutzen.");
+						System.out.println(ausgabe.getName());
+						System.out.println(benutzteListe.get(i).getName());
 						ausgabe = null;
 						break;	
 					}
@@ -438,6 +443,14 @@ public class Spiel {
 		Spiel.tueren = tueren;
 	}
 	
+	public static Raum[][] getMap() {
+		return map;
+	}
+
+	public static void setMap(Raum[][] map) {
+		Spiel.map = map;
+	}
+
 	
 	public static void closeScan() {
 		scan.close();

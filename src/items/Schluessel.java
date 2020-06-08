@@ -1,7 +1,7 @@
 package items;
 import game.*;
 
-public class Schluessel extends Item implements Cloneable{
+public class Schluessel extends Item{
 
 	
 
