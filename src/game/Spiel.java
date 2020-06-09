@@ -29,14 +29,14 @@ public class Spiel {
 	// -------------------- Game Data --------------------
 	public static void generiereDefaultMap() throws CloneNotSupportedException{
 		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
-		map[1][1] = new Raum(1, 1, 6);
+		map[1][1] = new Raum(1, 1, 6, 31);
 		map[2][1] = new Raum(2, 1, 5, 23);
 		map[3][1] = new Raum(3, 1, 4, 29);	
 		map[4][1] = new Raum(4, 1, 28);		
 		//
 		map[1][2] = new Raum(1, 2, 21);
 		map[2][2] = new Raum(2, 2, 4, 26);	
-		map[3][2] = new Raum(3, 2);			//EE-Rätsel
+		map[3][2] = new Raum(3, 2, 30);	
 		map[4][2] = new Raum(4, 2, 4, 22);	
 		//
 		map[1][3] = new Raum(1, 3, 1);
@@ -83,6 +83,7 @@ public class Spiel {
 		items.add(new Lampe());
 		items.add(new Arkankubus());
 		items.add(new Zuckerwasser());
+		items.add(new KraftTrank());
 		items.add(new evt_Finale());
 		items.add(new evt_Bodenstacheln());
 		items.add(new evt_Pfeilfalle());
@@ -93,6 +94,8 @@ public class Spiel {
 		items.add(new evt_GiftPfeilPuzzle());
 		items.add(new evt_ArmFallenPuzzle());
 		items.add(new evt_SphinxPuzzle());
+		items.add(new evt_Altar());
+		items.add(new evt_AltFinale());
 		
 	}
 	
