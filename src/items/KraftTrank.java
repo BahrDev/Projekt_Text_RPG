@@ -1,14 +1,13 @@
 package items;
-import game.*;
 
-public class Heiltrank extends Item{
-	
-	private int kraftBonus = 5;
-	
-	public Heiltrank() {
+import game.Held;
+
+public class KraftTrank extends Item{
+
+	public KraftTrank() {
 		super();
 		this.setItemID(9);
-		this.setName("Heiltrank");
+		this.setName("KraftTrank");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setWeight(1);
 		this.setVerbrauchsItem(true);
@@ -18,14 +17,20 @@ public class Heiltrank extends Item{
 	@Override
 	public void use(String befehl) {
 		super.use(befehl);
-		this.useEffect();
-		Held.getInventar().remove(this);
+		if(Held.getLeben() < Held.getLebenMax()) {
+			this.useEffect();
+			Held.getInventar().remove(this);
+		}else {
+			System.out.println("Du bist bereits bei voller Gesundheit.");
+		}
+				
+		
 	}
 
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		Held.setKraft(Held.getKraft() + kraftBonus);
+		Held.heilung(1);
 	}
 
 
@@ -33,9 +38,5 @@ public class Heiltrank extends Item{
 	public Object clone () throws CloneNotSupportedException{
 		return super.clone();
 	}
-	
-	
-	
-	
 	
 }

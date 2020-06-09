@@ -1,13 +1,16 @@
 package events;
 
+import game.Held;
 import game.Spiel;
 import items.Item;
 
-public class evt_Finale extends Item implements Event {
+public class evt_AltFinale extends Item implements Event{
+
+	private String trigger = "spring";
 	
-	public evt_Finale() {
+	public evt_AltFinale() {
 		super();
-		this.setItemID(20);
+		this.setItemID(31);
 		this.setName("evt_Finale");
 		this.setBeschreibung("Verweiß bitte hier einfügen!");
 		this.setEventItem(true);
@@ -34,9 +37,6 @@ public class evt_Finale extends Item implements Event {
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
-		System.out.println(this.getBeschreibung());
-		Spiel.closeScan();
-		System.out.println("Credits hier abspielen lassen");
 	}
 
 	@Override
@@ -46,7 +46,15 @@ public class evt_Finale extends Item implements Event {
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		return false;
+		if (Held.getKraft() == 10 && 
+			befehl.contains(trigger.toUpperCase())) {
+			System.out.println(this.getBeschreibung());
+			Spiel.closeScan();
+			System.out.println("Credits hier abspielen lassen");
+			return true;
+		}else {
+			return false;
+		}
 	}
-
+	
 }

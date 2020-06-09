@@ -1,15 +1,14 @@
 package items;
-import game.*;
 
-public class Heiltrank extends Item{
+import game.Held;
+
+public class Zuckerwasser extends Item{
 	
-	private int kraftBonus = 5;
-	
-	public Heiltrank() {
+	public Zuckerwasser() {
 		super();
-		this.setItemID(9);
-		this.setName("Heiltrank");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setItemID(8);
+		this.setName("Flasche");
+		this.setBeschreibung("Mhhh, lecker Zuckerwasser.");
 		this.setWeight(1);
 		this.setVerbrauchsItem(true);
 	}
@@ -25,7 +24,7 @@ public class Heiltrank extends Item{
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		Held.setKraft(Held.getKraft() + kraftBonus);
+		System.out.println(this.getBeschreibung());
 	}
 
 
@@ -34,8 +33,5 @@ public class Heiltrank extends Item{
 		return super.clone();
 	}
 	
-	
-	
-	
-	
+
 }
