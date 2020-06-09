@@ -31,11 +31,11 @@ public class Spiel {
 		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
 		map[1][1] = new Raum(1, 1, 6);
 		map[2][1] = new Raum(2, 1, 5, 23);
-		map[3][1] = new Raum(3, 1, 4, 29);	// Master-Rätsel hier einbauen, MS(7) nur bei Lösung
-		map[4][1] = new Raum(4, 1, 28);		// Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		map[3][1] = new Raum(3, 1, 4, 29);	
+		map[4][1] = new Raum(4, 1, 28);		
 		//
 		map[1][2] = new Raum(1, 2, 21);
-		map[2][2] = new Raum(2, 2, 4, 26);	//Rätsel hier einbauen, Heiltrank(2) nur bei Lösung
+		map[2][2] = new Raum(2, 2, 4, 26);	
 		map[3][2] = new Raum(3, 2);			//EE-Rätsel
 		map[4][2] = new Raum(4, 2, 4, 22);	
 		//
@@ -47,7 +47,7 @@ public class Spiel {
 		map[1][4] = new Raum(1, 4, 3);
 		map[2][4] = new Raum(2, 4, 22);
 		map[3][4] = new Raum(3, 4, 24);
-		map[4][4] = new Raum(4, 4, 27);		//Rätsel hier einbauen, Schlüssel(1) nur bei Lösung
+		map[4][4] = new Raum(4, 4, 27);	
 		//
 		map[2][5] = new Raum(2, 5, 20);
 		
@@ -172,7 +172,13 @@ public class Spiel {
 		System.out.println("Heb ITEM - Nimmt ein Item auf, welches in diesem Raum liegt.");
 		System.out.println("Fallenlassen ITEM - Lässt ein Item fallen");
 		System.out.println("Benutze ITEM - Verwendet ein Item.");
+		System.out.println("Exit - Beendet das Spiel.");
 		System.out.println("===================");
+	}
+	
+	public static void exit() {
+		System.out.println("Spiel beendet.");
+		System.exit(0);
 	}
 	
 	public static void observeRoom() {
@@ -216,25 +222,27 @@ public class Spiel {
 		Held.setPosY(y);
 	}
 	
-	public static void userEingabe() {
-		String eingabe = scan.nextLine().toUpperCase();
-		
-		if (eventItem != null) {
-			if (eventItem.triggerEffect(eingabe) != true) {
-				Spiel.befolgeBefehl(eingabe);
-			}else {
-				if (Held.isAlive()) {
-					Spiel.userEingabe();
+	public static void userEingabe() {		
+		try {
+			String eingabe = scan.nextLine().toUpperCase();
+			
+			if (eventItem != null) {
+				if (eventItem.triggerEffect(eingabe) != true) {
+					Spiel.befolgeBefehl(eingabe);
 				}else {
-					System.out.println(Texte.deathMessage);
-					scan.close();
+					if (Held.isAlive()) {
+						Spiel.userEingabe();
+					}else {
+						System.out.println(Texte.deathMessage);
+						scan.close();
+					}
 				}
+			}else {
+				Spiel.befolgeBefehl(eingabe);
 			}
-		}else {
-			Spiel.befolgeBefehl(eingabe);
+		} catch (Exception e) {
+			System.out.println("GAME OVER");
 		}
-		
-
 	}
 	
 	public static void befolgeBefehl(String befehl) {
@@ -286,6 +294,8 @@ public class Spiel {
 			Spiel.dropItem(befehl);
 		}else if(befehl.contains("HILF")){
 			Spiel.help();
+		}else if(befehl.contains("EXIT")){
+			Spiel.exit();
 		}else if (befehl.contains("TEST")) {
 													// Testen während der Runtime, später entfernen
 			if (befehl.contains("1")) {
@@ -450,7 +460,6 @@ public class Spiel {
 	public static void setMap(Raum[][] map) {
 		Spiel.map = map;
 	}
-
 	
 	public static void closeScan() {
 		scan.close();
