@@ -17,6 +17,7 @@ public class Spiel {
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
 
+		Texte.addRaumTexte();
 		Spiel.generiereAlleItems();
 		Spiel.generiereDefaultMap();
 		Spiel.setStartingPos(1, 1);

@@ -1,48 +1,89 @@
 package game;
-import java.util.*;
+
 public class Texte {
 	
+	public static String[][] raumTexte = new String[6][6];
+	
+	// -------------------- Schlüsselwörter Eingabe --------------------
 	
 	
 	
-	public static ArrayList<String> itemNamen = new ArrayList<String>( 
-            Arrays.asList(
-            		"Platzhalter",
-            		"Schlüssel", 
-                    "Heiltrank", 
-                    "Schild",
-                    "Flusen",
-                    "Kompass",
-                    "Lampe",
-                    "evt_Pfeilfalle"
-            		)); 
 	
-	public static ArrayList<String> itemBeschreibung = new ArrayList<String>( 
-            Arrays.asList(
-            		"Platzhalter",
-            		"Ein Schlüssel aus kalt geschmiedetem Eisen. Er öffnet gewöhnliche Türen.", 
-                    "Ein kleines Glasfläschchen mit einer rot leuchtenden Flüssigkeit.", 
-                    "Ein großer Schild aus Stahl der die meisten Angriffe abwehrt. Du musst ihn nur tragen, nicht benutzen.",
-                    "Ein erstaunliche Menge an Flusen, verfilzt und staubig.",
-                    "Ein kleiner Kompass aus Messing, mit ihm kannst du dich orientieren.",
-                    "Eine Öl-Lampe, sie bringt Licht ins dunkle.",
-                    "Plötzlich schießen Pfeile aus kleinen Löchern in den Wänden und durchbohren dich."
-            		));
 	
-	public static ArrayList<Integer> itemGewichte = new ArrayList<Integer>( 
-            Arrays.asList(
-            		0,
-            		1,
-            		1,
-            		5,
-            		0,
-            		1,
-            		3,
-            		0
-            		));
+	// -------------------- Spielmechanik-Texte --------------------
+	
+	
+	
+	
+	// -------------------- Räume --------------------
 
+	public static void addRaumTexte() {	
+		raumTexte[1][1] = "";
+		raumTexte[2][1] = "";
+		raumTexte[3][1] = "";
+		raumTexte[4][1] = "";
+		
+		raumTexte[1][2] = "";
+		raumTexte[2][2] = "";
+		raumTexte[3][2] = "";
+		raumTexte[4][2] = "";
+		
+		raumTexte[1][3] = "";
+		raumTexte[2][3] = "";
+		raumTexte[3][3] = "";
+		raumTexte[4][3] = "";
+		
+		raumTexte[1][4] = "";
+		raumTexte[2][4] = "";
+		raumTexte[3][5] = "";
+		raumTexte[4][5] = "";
+		
+		raumTexte[5][2] = "";	
+	}
+		
+	// -------------------- Items --------------------
 	
+	//itemID: 0
+	public static String itemName0 = "Muster";
+	public static String itemBeschreibung0 = "Muster";
 	
+	//itemID: 1
+	public static String itemName1 = "Schlüssel";
+	public static String itemBeschreibung1 = "";
+	
+	//itemID: 2
+	public static String itemName2 = "Heiltrank";
+	public static String itemBeschreibung2 = "";
+		
+	//itemID: 3
+	public static String itemName3 = "Schild";
+	public static String itemBeschreibung3 = "";
+	
+	//itemID: 4
+	public static String itemName4 = "Flusen";
+	public static String itemBeschreibung4 = "Die sind zu nicht zu gebrauchen.";
+	
+	//itemID: 5
+	public static String itemName5 = "Kompass";
+	public static String itemBeschreibung5 = "";
+	
+	//itemID: 6
+	public static String itemName6 = "Lampe";
+	public static String itemBeschreibung6 = "";
+	
+	//itemID: 7
+	public static String itemName7 = "Arkankubus";
+	public static String itemBeschreibung7 = "";
+	
+	//itemID: 8
+	public static String itemName8 = "Zuckerwasser";
+	public static String itemBeschreibung8 = "";
+	
+	//itemID: 8
+	public static String itemName9 = "Krafttrank";
+	public static String itemBeschreibung9 = "";
+	
+	// -------------------- Events --------------------
 	
 	
 	
@@ -59,10 +100,14 @@ public class Texte {
 										+ "\nWas möchtest du tun?";
 	
 	public static String deathMessage = "Du erliegst deinen Wunden, deine Leiche wird auf Jahrhunderte hinaus in diesem Kerker verrotten.\nGame Over";
+
+	
+	
+
 	
 	
 	
 	
 	
-	//System.out.println("Du bist überladen und kannst dies nicht noch zusätzlich tragen.");
+	
 }
