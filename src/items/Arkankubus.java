@@ -2,23 +2,15 @@ package items;
 
 import game.Held;
 import game.Spiel;
+import game.Texte;
 
 public class Arkankubus extends Item{
-	
-
-	
-
-	
-	public Arkankubus(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
-		this.setVerbrauchsItem(true);
-	}
 	
 	public Arkankubus() {
 		super();
 		this.setItemID(7);
-		this.setName("Arkankubus");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName7);
+		this.setBeschreibung(Texte.itemBeschreibung7);
 		this.setWeight(2);
 		this.setVerbrauchsItem(true);
 	}
@@ -26,16 +18,16 @@ public class Arkankubus extends Item{
 	@Override
 	public void use(String befehl) {
 		super.use(befehl);
-		if (befehl.toUpperCase().contains("WEST")) {
+		if (befehl.toUpperCase().contains(Texte.keyWordWest)) {
 			this.UseEffect(-1, 0);
-		}else if (befehl.toUpperCase().contains("OST")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordEast)) {
 			this.UseEffect(1, 0);
-		}else if (befehl.toUpperCase().contains("NORD")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordNorth)) {
 			this.UseEffect(0, -1);
-		}else if (befehl.toUpperCase().contains("SÜD")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordSouth)) {
 			this.UseEffect(0, 1);
 		}else {
-			System.out.println("Welche Tür möchtest du damit öffnen?");
+			System.out.println(Texte.item7WhichDoor);
 		}
 	}
 
@@ -47,10 +39,10 @@ public class Arkankubus extends Item{
 	public void UseEffect(int zielraumX, int zielraumY) {
 		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isMasterLocked()) {
 			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setMasterLocked(false);
-			System.out.println("Du drehst den enormen Schlüssel in der massiven Tür. Der Boden bebt, als sich die Tür nach innen öffnet.");
+			System.out.println(Texte.item7Success);
 			Held.getInventar().remove(this);
 		}else {
-			System.out.println("Diese Tür ist nicht verschlossen.");
+			System.out.println(Texte.item7NotLocked);
 		}
 	}
 

@@ -3,30 +3,35 @@ import game.*;
 
 public class Heiltrank extends Item{
 	
-	private int kraftBonus = 5;
+	private int heilBonus = 1;
 	
 	public Heiltrank() {
 		super();
-		this.setItemID(9);
-		this.setName("Heiltrank");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setItemID(2);
+		this.setName(Texte.itemName2);
+		this.setBeschreibung(Texte.itemBeschreibung2);
 		this.setWeight(1);
 		this.setVerbrauchsItem(true);
 	}
 	
-
+	
 	@Override
 	public void use(String befehl) {
 		super.use(befehl);
-		this.useEffect();
-		Held.getInventar().remove(this);
+		if(Held.getLeben() < Held.getLebenMax()) {
+			this.useEffect();
+			Held.getInventar().remove(this);
+		}else {
+			System.out.println(Texte.item2FullHealth);
+		}
 	}
 
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		Held.setKraft(Held.getKraft() + kraftBonus);
+		Held.heilung(this.heilBonus);
 	}
+
 
 
 	@Override

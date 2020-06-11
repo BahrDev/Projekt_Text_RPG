@@ -4,18 +4,11 @@ import game.*;
 public class Schluessel extends Item{
 
 	
-
-	
-	public Schluessel(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
-		this.setVerbrauchsItem(true);
-	}
-	
 	public Schluessel() {
 		super();
 		this.setItemID(1);
-		this.setName("Schlüssel");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName1);
+		this.setBeschreibung(Texte.itemBeschreibung1);
 		this.setWeight(1);
 		this.setVerbrauchsItem(true);
 	}
@@ -23,16 +16,16 @@ public class Schluessel extends Item{
 	@Override
 	public void use(String befehl) {
 		super.use(befehl);
-		if (befehl.toUpperCase().contains("WEST")) {
+		if (befehl.toUpperCase().contains(Texte.keyWordWest)) {
 			this.UseEffect(-1, 0);
-		}else if (befehl.toUpperCase().contains("OST")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordEast)) {
 			this.UseEffect(1, 0);
-		}else if (befehl.toUpperCase().contains("NORD")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordNorth)) {
 			this.UseEffect(0, -1);
-		}else if (befehl.toUpperCase().contains("SÜD")) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordWest)) {
 			this.UseEffect(0, 1);
 		}else {
-			System.out.println("Welche Tür möchtest du damit öffnen?");
+			System.out.println(Texte.item1WhichDoor);
 		}
 	}
 
@@ -44,10 +37,10 @@ public class Schluessel extends Item{
 	public void UseEffect(int zielraumX, int zielraumY) {
 		if(Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).isSimpleLocked()) {
 			Spiel.tuerTargetter(Held.getPosX() + zielraumX, Held.getPosY() + zielraumY).setSimpleLocked(false);
-			System.out.println("Die Tür wurde entriegelt, dein Schlüssel bricht dabei ab.");
-			Held.getInventar().remove(this);		// Prüfen ob dies so funktioniert
+			System.out.println(Texte.item1Success);
+			Held.getInventar().remove(this);
 		}else {
-			System.out.println("Diese Tür ist nicht verschlossen.");
+			System.out.println(Texte.item1NotLocked);
 		}
 	}
 

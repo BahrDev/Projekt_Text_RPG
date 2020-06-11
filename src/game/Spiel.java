@@ -109,13 +109,13 @@ public class Spiel {
 		aktuelleTuer = tuerTargetter(zielraumX, zielraumY);
 		if (aktuelleTuer != null) {
 			if (aktuelleTuer.isMasterLocked()) {
-				System.out.println("Du brauchst einen besonderen Schlüssel um diese Tür zu öffnen.");
+				System.out.println(Texte.goNeedArkaneKubus);
 			}else if (aktuelleTuer.isSimpleLocked()) {
-				System.out.println("Diese Tür ist verschlossen.");
+				System.out.println(Texte.goDoorLocked);
 			}else if (aktuelleTuer.isDestroyed()) {
-				System.out.println("Dieser Durchgang ist verschüttet.");
+				System.out.println(Texte.goDoorwayUnpassable);
 			}else {
-				System.out.println("Du verlässt den Raum in Richtung " + Spiel.richtungsWandler(laufrichtungX, laufrichtungY) + "."); 
+				System.out.println(Texte.goYouLeave + " " + Spiel.richtungsWandler(laufrichtungX, laufrichtungY) + "."); 
 				Spiel.event("Leave");
 				Held.setPosX(zielraumX);
 				Held.setPosY(zielraumY);
@@ -123,7 +123,7 @@ public class Spiel {
 				Spiel.betreteRaum();
 			}
 		}else {
-			System.out.println("Dort ist kein Ausgang.");
+			System.out.println(Texte.goNoExit);
 		}
 	}
 		
@@ -132,7 +132,7 @@ public class Spiel {
 		if (itemFromCMD != null) {
 			itemFromCMD.use(befehl);	
 		}else {
-			System.out.println("Welches Item meinst du genau?.");
+			System.out.println(Texte.useItem);
 		}	
 	}
 	
@@ -143,12 +143,12 @@ public class Spiel {
 			if (Held.checkIfItemFitsInventory(itemFromCMD.getWeight())) {
 				Held.getInventar().add(itemFromCMD);
 				map[Held.getPosX()][Held.getPosY()].removeItemFromRoom(itemFromCMD);
-				System.out.println("Du hast " + itemFromCMD.getName() + " aufgehoben.");
+				System.out.println(Texte.pickUpItem1 + " " + itemFromCMD.getName() + " " + Texte.pickUpItem2);
 			}else {
-				System.out.println("Dieses Item ist zu schwer, als dass du es noch tragen könntest.");
+				System.out.println(Texte.pickUpItemToHeavy);
 			}				
 		}else {
-			System.out.println("Du kannst dieses Item hier nirgendwo finden.");
+			System.out.println(Texte.pickUpItemNotFound);
 		}
 	}
 	
@@ -158,30 +158,23 @@ public class Spiel {
 		if (itemFromCMD != null) {
 			map[Held.getPosX()][Held.getPosY()].addItemToRoom(itemFromCMD);
 			Held.getInventar().remove(itemFromCMD);
-			System.out.println("Du hast " + itemFromCMD.getName() + " fallen gelassen." );
+			System.out.println(Texte.dropItem1 + " " + itemFromCMD.getName() + " " + Texte.dropItem2);
 			if (itemFromCMD.isDropEffekt()) {
 				itemFromCMD.dropEffect();
 			}
 		}else {
-			System.out.println("Du kannst nichts fallen lassen, was du nicht besitzt.");
+			System.out.println(Texte.dropItemNotFound);
 		}
 	}
 	
 	public static void help() {	
 		System.out.println("===================");
-		System.out.println("Anmerk: Alle Item-Namen sind Case-Sensitive.");
-		System.out.println("Hilfe - Zeigt alle gültigen Befehle an.");
-		System.out.println("Geh HIMMELSRICHTUNG - Bewegt dich in die entsprechende Himmelsrichtung");
-		System.out.println("Schau PARAMETER - Gibt Informationen über einen Raum, eine Tür oder ein Item.");
-		System.out.println("Heb ITEM - Nimmt ein Item auf, welches in diesem Raum liegt.");
-		System.out.println("Fallenlassen ITEM - Lässt ein Item fallen");
-		System.out.println("Benutze ITEM - Verwendet ein Item.");
-		System.out.println("Exit - Beendet das Spiel.");
+		System.out.println(Texte.helpMessage);
 		System.out.println("===================");
 	}
 	
 	public static void exit() {
-		System.out.println("Spiel beendet.");
+		System.out.println(Texte.exitGame);
 		System.exit(0);
 	}
 	
@@ -191,13 +184,12 @@ public class Spiel {
 			System.out.println(checkForDoors());
 			map[Held.getPosX()][Held.getPosY()].zeigeInventarImRaum();
 		}else {
-			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
+			System.out.println(Texte.observeRoomToDark);
 		}
 	}
 	
 	public static void observeSelf() {
 		Held.zeigeLeben();
-		
 	}
 	
 	public static void observeDoor(int richtungX, int richtungY) {
@@ -207,16 +199,16 @@ public class Spiel {
 		aktuelleTuer = tuerTargetter(zielTuerX, zielTuerY);
 		if (aktuelleTuer != null) {
 			if (aktuelleTuer.isMasterLocked()) {
-				System.out.println("Ein komplexes und großes Schloss ist in der Tür verbaut. Du kannst nicht hindurch sehen und vermutest, dass du hierfür einen ganz besonderen Schlüssel benötigst.");
+				System.out.println(Texte.observeDoorMasterLocked);
 			}else if (aktuelleTuer.isSimpleLocked()) {
-				System.out.println("Diese Tür ist mit einem simplen Schloss versehen. Du brauchst einen Schlüssel um sie zu öffnen.");
+				System.out.println(Texte.observeDoorLocked);
 			}else if (aktuelleTuer.isDestroyed()) {
-				System.out.println("Dieser Durchgang ist verschüttet und daher unpassierbar.");
+				System.out.println(Texte.observeDoorUnpassable);
 			}else {
-				System.out.println("Eine gewöhnliche Tür, sie ist nicht verriegelt.");
+				System.out.println(Texte.observeDoorOpen);
 			}
 		}else {
-			System.out.println("Dort ist kein Ausgang.");
+			System.out.println(Texte.observeDoorNoExit);
 		}
 	}
 	
@@ -251,86 +243,84 @@ public class Spiel {
 	
 	public static void befolgeBefehl(String befehl) {
 		
-
-		if (befehl.contains("GEH")) {
-			if (befehl.contains("WEST")) {
+		if (befehl.contains(Texte.keyWordgo)) {
+			if (befehl.contains(Texte.keyWordWest)) {
 				Spiel.go(-1, 0);
-			}else if (befehl.contains("OST")) {
+			}else if (befehl.contains(Texte.keyWordEast)) {
 				Spiel.go(1, 0);
-			}else if (befehl.contains("NORD")) {
+			}else if (befehl.contains(Texte.keyWordNorth)) {
 				Spiel.go(0, -1);
-			}else if (befehl.contains("SÜD")) {
+			}else if (befehl.contains(Texte.keyWordSouth)) {
 				Spiel.go(0, 1);
 			}
-		}else if (befehl.contains("SCHAU")) {
+		}else if (befehl.contains(Texte.keyWordObserve)) {
 			Item itemFromCMD = Spiel.commandTranslatorItem(befehl, "Alle");
-			if (befehl.contains("RAUM")) {
+			if (befehl.contains(Texte.keyWordRoom)) {
 				Spiel.observeRoom();
-			}else if (befehl.contains("SELBST")) {
+			}else if (befehl.contains(Texte.keyWordSelf)) {
 				Held.zeigeLeben();
 				Held.zeigeGewicht();
-			}else if(befehl.contains("TÜR")) {
-				if (befehl.contains("WEST")) {
+			}else if(befehl.contains(Texte.keyWordDoor)) {
+				if (befehl.contains(Texte.keyWordWest)) {
 					Spiel.observeDoor(-1, 0);
-				}else if (befehl.contains("OST")) {
+				}else if (befehl.contains(Texte.keyWordEast)) {
 					Spiel.observeDoor(1, 0);
-				}else if (befehl.contains("NORD")) {
+				}else if (befehl.contains(Texte.keyWordNorth)) {
 					Spiel.observeDoor(0, -1);
-				}else if (befehl.contains("SÜD")) {
+				}else if (befehl.contains(Texte.keyWordSouth)) {
 					Spiel.observeDoor(0, 1);
 				}else {
-					System.out.println("Welche Tür möchtest du dir denn ansehen?");
+					System.out.println(Texte.befolgeBefehlWhichDoor);
 				}
-			}else if(befehl.contains("INVENTAR")) {
+			}else if(befehl.contains(Texte.keyWordInventory)) {
 				Held.zeigeInventar();
 			}else if (Held.getInventar().contains(itemFromCMD)) {
 				System.out.println(itemFromCMD.getBeschreibung());
 			}else if (map[Held.getPosX()][Held.getPosY()].inventarImRaum.contains(itemFromCMD)) {
 				System.out.println(itemFromCMD.getBeschreibung());
 			}else {
-				System.out.println("Was genau möchtest du dir anschauen?");
+				System.out.println(Texte.befolgeBefehlWhatToLookAt);
 			}
-		}else if (befehl.contains("BENUTZE")) {
+		}else if (befehl.contains(Texte.keyWordUse)) {
 			Spiel.useItem(befehl);	
-		}else if(befehl.contains("HEBE")){
+		}else if(befehl.contains(Texte.keyWordPickup)){
 			Spiel.pickupItem(befehl);
-		}else if(befehl.contains("FALLEN")){
+		}else if(befehl.contains(Texte.keyWordDrop)){
 			Spiel.dropItem(befehl);
-		}else if(befehl.contains("HILF")){
+		}else if(befehl.contains(Texte.keyWordHelp)){
 			Spiel.help();
-		}else if(befehl.contains("EXIT")){
+		}else if(befehl.contains(Texte.keyWordExit)){
 			Spiel.exit();
 		}else if (befehl.contains("TEST")) {
-													// Testen während der Runtime, später entfernen
+													// zum Testen während der Runtime, später entfernen
 			if (befehl.contains("1")) {
 				items.get(1).use(befehl);
 			}else if (befehl.contains("2")) {
 				System.out.println(eventItem);
 			}
 		}else {
-			System.out.println("Wups, ungültiger Befehl");
+			System.out.println(Texte.befolgeBefehlWrongCommand);
 		}
-		
+		// Check auf Überleben der Aktion
 		if (Held.isAlive()) {
 			Spiel.userEingabe();
 		}else {
 			System.out.println(Texte.deathMessage);
 			scan.close();
-		}
-		
+		}	
 	}
 	
 	public static void betreteRaum() {
 		System.out.println("========================================");
 		if (Held.isHasSight()) {
 			if (map[Held.getPosX()][Held.getPosY()].isBesucht()) {
-				System.out.println("Hier warst du schon einmal.");
+				System.out.println(Texte.betreteRaumAgain);
 			}
 			System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
 			System.out.println(checkForDoors());
 			Spiel.event("Enter");
 		}else {
-			System.out.println("Es ist zu dunkel um irgendetwas zu erkennen.");
+			System.out.println(Texte.betreteRaumToDark);
 			Spiel.event("Enter");
 		}
 		map[Held.getPosX()][Held.getPosY()].setBesucht(true);
@@ -354,7 +344,7 @@ public class Spiel {
 			if (command.contains(benutzteListe.get(i).getName().toUpperCase())) {
 				if (checkForSecondItemTrue) {
 					if (ausgabe.getName() != benutzteListe.get(i).getName()) {
-						System.out.println("Du kannst immer nur ein Item auf einmal benutzen.");
+						System.out.println(Texte.commandTranslatorItem);
 						System.out.println(ausgabe.getName());
 						System.out.println(benutzteListe.get(i).getName());
 						ausgabe = null;
@@ -393,18 +383,18 @@ public class Spiel {
 	}
 	
 	public static String checkForDoors() {	 
-		String ausgabe = "Dieser Raum hat Türen im:";
+		String ausgabe = Texte.checkForDoors + ": ";
 		if (tuerTargetter(Held.getPosX(), Held.getPosY()-1) != null) {
-			ausgabe += " Norden";
+			ausgabe += " " + Texte.himmelsrichtungNorden;
 		}
 		if (tuerTargetter(Held.getPosX(), Held.getPosY()+1) != null) {
-			ausgabe += " Süden";
+			ausgabe += " " + Texte.himmelsrichtungSueden;
 		}
 		if (tuerTargetter(Held.getPosX()-1, Held.getPosY()) != null) {
-			ausgabe += " Westen";
+			ausgabe += " " + Texte.himmelsrichtungWesten;
 		}
 		if (tuerTargetter(Held.getPosX()+1, Held.getPosY()) != null) {
-			ausgabe += " Osten";
+			ausgabe += " " + Texte.himmelsrichtungOsten;
 		}
 		return ausgabe;
 	}
@@ -422,15 +412,19 @@ public class Spiel {
 	public static String richtungsWandler(int richtungX, int richtungY) {
 		String ausgabe = "";
 		if (richtungX == -1) {
-			ausgabe = "Westen";
+			ausgabe = Texte.himmelsrichtungWesten;
 		}else if (richtungX == 1) {
-			ausgabe = "Osten";
+			ausgabe =  Texte.himmelsrichtungOsten;
 		}else if (richtungY == -1) {
-			ausgabe = "Norden";
+			ausgabe = Texte.himmelsrichtungNorden;
 		}else if (richtungY == 1) {
-			ausgabe = "Süden";
+			ausgabe = Texte.himmelsrichtungSueden;
 		}
 		return ausgabe;
+	}
+	
+	public static void closeScan() {
+		scan.close();
 	}
 	
 	public static Event getEventItem() {
@@ -465,25 +459,5 @@ public class Spiel {
 		Spiel.map = map;
 	}
 	
-	public static void closeScan() {
-		scan.close();
-	}
-
-	
-	// -------------------- Test-Methoden, können später gelöscht werden --------------------
-	
-
-
-
-	public static void testeAlleItems() {
-		for (int i = 0; i < items.size(); i++) {
-			System.out.println(Spiel.items.get(i).getName());
-		}
-	}
-
-
-
-	
-
 	
 }

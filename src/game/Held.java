@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import items.*;
 
 public class Held {
+	
+	// Attribute
 	private static int leben = 3;
 	private static int lebenMax = 5;
 	private static int kraft = 5;
@@ -14,10 +16,8 @@ public class Held {
 	private static boolean isAlive = true;
 	private static ArrayList<Item> inventar = new ArrayList<Item>();
 	
-
 	
-	
-	
+	// Methoden
 	public static boolean checkIfItemFitsInventory(int GewichtItem) {
 		if ((Held.inventoryWeight() + GewichtItem) > Held.kraft) {
 			return false;
@@ -28,7 +28,7 @@ public class Held {
 	}
 	
 	public static void zeigeGewicht() {
-		System.out.println("Belastung: " + Held.inventoryWeight() + "/" + kraft);
+		System.out.println(Texte.heldzeigeGewicht + ": " + Held.inventoryWeight() + "/" + kraft);
 	}
 	
 	public static int inventoryWeight() {
@@ -40,7 +40,7 @@ public class Held {
 	}
 	
 	public static void zeigeInventar() {
-		String ausgabe = "Dein Inventar besteht aus diesen Items: \n";
+		String ausgabe = Texte.heldZeigeInventar + ": \n";
 		for (int i = 0; i < inventar.size(); i++) {
 			ausgabe+= "- " + Held.inventar.get(i).getName() + "\n";
 		}
@@ -58,29 +58,25 @@ public class Held {
 	}
 		
 	public static void zeigeLeben() {
-		System.out.println("Leben: " + leben + "/" + lebenMax);
+		System.out.println(Texte.heldZeigeLeben + ": " + leben + "/" + lebenMax);
 	}
 	
 	public static void heilung(int x) {
 		if (leben < lebenMax) {
 			leben += x;
-			System.out.println("Du wurdest um " + x + " Leben geheilt.");
-			//Held.ZeigeInventar();
+			System.out.println(Texte.heldHeilung1 + " " + x + " " +  Texte.heldHeilung2);
 		}else {
-			System.out.println("Du spürst keine Veränderung.");
+			System.out.println(Texte.heldHeilung3);
 		}
-		
-		
-		
 	}
 	
 	public static void schaden(int x) {
 		int schaden = x - armor;
 		if (schaden <= 0) {
-			System.out.println("Mit deinem Schild konntest du den Schaden abwehren.");
+			System.out.println(Texte.heldSchaden1);
 		}else {
 			leben -= x;
-			System.out.println("Du hast " + x + " Schaden bekommen.");
+			System.out.println(Texte.heldSchaden2 + " " + x + " " + Texte.heldSchaden3);
 			if (Held.checkIfDead()) {
 				Held.isAlive = false;
 			}else {
@@ -99,11 +95,11 @@ public class Held {
 	
 	public static void kraftRauf(int x) {
 		kraft += x;
-		System.out.println("Du fühlst dich stärker.");
+		System.out.println(Texte.heldKraftRauf);
 	}
 
 	
-	
+	// Getter und Setter
 	public static int getLeben() {
 		return leben;
 	}
@@ -175,11 +171,6 @@ public class Held {
 	public static void setInventar(ArrayList<Item> inventar) {
 		Held.inventar = inventar;
 	}
-	
-//	public static void KraftRunter(int x) {
-//		kraft -= x;
-//		System.out.println("Du fühlst dich schwächer.");
-//	}
 	
 	
 	
