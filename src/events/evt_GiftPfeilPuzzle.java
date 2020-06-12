@@ -1,18 +1,19 @@
 package events;
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Item;
 import items.Schluessel;
 
 public class evt_GiftPfeilPuzzle extends Item implements Event{
 	
-	private String[] richtigeAntwort = {"2", "3", "7"};
-	private String[] altRichtigeAntwort = {"zwei", "drei", "sieben"};
-	private String[] falscheAntwort = {"1", "4", "5", "6", "8", "9"};
-	private String[] altFalscheAntwort = {"eins", "vier", "fünf", "sechs", "sieben", "acht"};
+	private String[] richtigeAntwort = Texte.event27RichtigeAntwort;
+	private String[] altRichtigeAntwort = Texte.event27AltRichtigeAntwort;
+	private String[] falscheAntwort = Texte.event27FalscheAntwort;
+	private String[] altFalscheAntwort = Texte.event27AltFalscheAntwort;
 	
-	private String endText = "Verweis bitte hier einfügen";
-	private String fehlerText = "Verweis bitte hier einfügen";
+	private String endText = Texte.event27EndText;
+	private String fehlerText = Texte.event27FehlerText;
 	
 	private boolean depleted = false;
 	
@@ -21,15 +22,8 @@ public class evt_GiftPfeilPuzzle extends Item implements Event{
 	public evt_GiftPfeilPuzzle() {
 		super();
 		this.setItemID(27);
-		this.setName("evt_GiftPfeilPuzzle");
-		this.setBeschreibung("In diesem Raum gibt es an der rechten Wand in einer Reihe neun Hebel.\n" + 
-				"An der gegenüberliegenden Wand gibt es nur einen einzigen Hebel.\n" + 
-				"Es gibt kleine Löcher an den Wänden die scheinbar wahllos im Raum verteilt sind.\n" + 
-				"Sie sind grade Groß genug damit dort 1-2 Finger hinein passen würden.\n" + 
-				"An der Decke hängt ein Gitterkäfig in dem du einen Schlüssel funkeln sehen kannst.\n" + 
-				"Über dem einsamen Hebel steht in den Stein gemeißelt:\n" + 
-				"\"Wieviel Gliedmaße haben die sieben mal sieben Freunde des einarmigen Alrik?\"\n" +
-				"Welche Hebel möchtest du also nach unten ziehen?");
+		this.setName(Texte.eventName27);
+		this.setBeschreibung(Texte.eventBeschreibung27);
 		this.setEventItem(true);
 	}
 
@@ -97,18 +91,18 @@ public class evt_GiftPfeilPuzzle extends Item implements Event{
 			}
 		}
 		// ---------- Ergebnisprüfung -----------
-		if(fail) {
-			System.out.println(this.fehlerText);
-			Held.schaden(1);
-			return true;
-		}else if(fail == false && richtigeHebel < 3) {
-			System.out.println(this.fehlerText);
-			Held.schaden(1);			
-			return true;
-		}else if(fail == false && richtigeHebel == 3) {
-			System.out.println(this.endText);
-			Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(GiftPfeilPuzzleBelohnung);
-			this.depleted = true;
+		if (this.depleted == false) {
+			if(fail) {
+				System.out.println(this.fehlerText);
+				Held.schaden(1);
+			}else if(fail == false && richtigeHebel < 3) {
+				System.out.println(this.fehlerText);
+				Held.schaden(1);			
+			}else if(fail == false && richtigeHebel == 3) {
+				System.out.println(this.endText);
+				Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(GiftPfeilPuzzleBelohnung);
+				this.depleted = true;
+			}
 			return true;
 		}else {
 			return false;

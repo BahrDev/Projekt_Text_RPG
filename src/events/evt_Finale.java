@@ -1,6 +1,7 @@
 package events;
 
 import game.Spiel;
+import game.Texte;
 import items.Item;
 
 public class evt_Finale extends Item implements Event {
@@ -8,8 +9,8 @@ public class evt_Finale extends Item implements Event {
 	public evt_Finale() {
 		super();
 		this.setItemID(20);
-		this.setName("evt_Finale");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName20);
+		this.setBeschreibung(Texte.eventBeschreibung20);
 		this.setEventItem(true);
 	}
 	
@@ -35,8 +36,8 @@ public class evt_Finale extends Item implements Event {
 	public void enterEffect() {
 		Spiel.setEventItem(this);
 		System.out.println(this.getBeschreibung());
-		Spiel.closeScan();
-		System.out.println("Credits hier abspielen lassen");
+		System.out.println(Texte.credits);
+		Spiel.exit("FORCED");
 	}
 
 	@Override

@@ -3,16 +3,12 @@ package items;
 import game.*;
 
 public class Kompass extends Item{
-
-	public Kompass(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
-	}
 	
 	public Kompass() {
 		super();
 		this.setItemID(5);
-		this.setName("Kompass");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName5);
+		this.setBeschreibung(Texte.itemBeschreibung5);
 		this.setWeight(1);
 	}
 
@@ -22,14 +18,14 @@ public class Kompass extends Item{
 		if (Held.isHasSight()) {
 			this.useEffect();
 		}else {
-			System.out.println("Es ist zu dunkel um zu erkennen was dein Kompass anzeigt.");
+			System.out.println(Texte.item5ToDark);
 		}
 	}
 
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		System.out.println("Deine Koordinaten: x=" + Held.getPosX() + " y=" + Held.getPosY());
+		System.out.println(Texte.item5Use + ": x=" + Held.getPosX() + " y=" + Held.getPosY());
 	}
 
 	

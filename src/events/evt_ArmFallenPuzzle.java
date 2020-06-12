@@ -1,19 +1,20 @@
 package events;
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Item;
 import items.Schluessel;
 
 public class evt_ArmFallenPuzzle extends Item implements Event{
 
-	private String richtigeAntwort = "AF";
-	private String falscheAntwort1 = "2C";
-	private String falscheAntwort2 = "B7";
-	private String falscheAntwort3 = "D8";
-	private String falscheAntwort4 = "15";
+	private String richtigeAntwort = Texte.event28RichtigeAntwort;
+	private String falscheAntwort1 = Texte.event28FalscheAntwort1;
+	private String falscheAntwort2 = Texte.event28FalscheAntwort2;
+	private String falscheAntwort3 = Texte.event28FalscheAntwort3;
+	private String falscheAntwort4 = Texte.event28FalscheAntwort4;
 	
-	private String endText = "Verweis bitte hier einfügen";
-	private String fehlerText = "Verweis bitte hier einfügen";
+	private String endText = Texte.event28EndText;
+	private String fehlerText = Texte.event28FehlerText;
 	
 	private boolean depleted = false;
 	
@@ -22,19 +23,8 @@ public class evt_ArmFallenPuzzle extends Item implements Event{
 	public evt_ArmFallenPuzzle() {
 		super();
 		this.setItemID(28);
-		this.setName("evt_ArmFallenPuzzle");
-		this.setBeschreibung("An der rechten Wand steht ein Tresor, er ist mit Eisen beschlagen und wirkt sehr massiv.\n" + 
-				"Gegenüberliegend steht an der Wand gemeißelt:\n" + 
-				"\"Alle 100011 (35) Männer einer Oase sind verheiratet und haben jeder 11 (3) Kinder.\n" + 
-				"Wieviele Menschen leben an der Oase?\"\n" + 
-				"Unter dem Schriftzug sind 5 Steinplatten in die Wand eingelassen, jede davon mit einem armdicken Loch in der Mitte.\n" + 
-				"Die Steinplatten sind folgendermaßen beschriftet:\n" + 
-				"- 2C\n" + 
-				"- B7\n" + 
-				"- D8\n" + 
-				"- AF\n" + 
-				"- 15\n" + 
-				"An der letzten Steinplatte hängt ein Skelett, dessen Arm noch immer in dem Loch der Platte steckt.");
+		this.setName(Texte.eventName28);
+		this.setBeschreibung(Texte.eventBeschreibung28);
 		this.setEventItem(true);
 	}
 

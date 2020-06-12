@@ -30,6 +30,7 @@ public class Raum {
 		super();
 		this.x = x;
 		this.y = y;
+		this.beschreibung = Texte.raumTexte[x][y];
 		if (itemID != null) {
 			this.addItemToRoom((Item)Spiel.cloneItemSelect(itemID).clone());
 			this.hasItem =true;

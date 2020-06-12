@@ -1,14 +1,17 @@
 package items;
 
 import game.Held;
+import game.Texte;
 
 public class KraftTrank extends Item{
 
+	private int kraftBonus = 5;
+	
 	public KraftTrank() {
 		super();
 		this.setItemID(9);
-		this.setName("KraftTrank");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName9);
+		this.setBeschreibung(Texte.itemBeschreibung9);
 		this.setWeight(1);
 		this.setVerbrauchsItem(true);
 	}
@@ -17,20 +20,15 @@ public class KraftTrank extends Item{
 	@Override
 	public void use(String befehl) {
 		super.use(befehl);
-		if(Held.getLeben() < Held.getLebenMax()) {
-			this.useEffect();
-			Held.getInventar().remove(this);
-		}else {
-			System.out.println("Du bist bereits bei voller Gesundheit.");
-		}
-				
-		
+		this.useEffect();
+		Held.getInventar().remove(this);
 	}
 
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		Held.heilung(1);
+		Held.setKraft(Held.getKraft() + kraftBonus);
+		System.out.println(Texte.item9Use);
 	}
 
 

@@ -1,6 +1,7 @@
 package events;
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.*;
 
 public class evt_Pfeilfalle extends Item implements Cloneable, Event{
@@ -11,8 +12,8 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 	public evt_Pfeilfalle() {
 		super();
 		this.setItemID(22);
-		this.setName("evt_Pfeilfalle");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName22);
+		this.setBeschreibung(Texte.eventBeschreibung22);
 		this.setEventItem(true);
 	}
 
@@ -37,7 +38,7 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 	public void enterEffect() {
 		Spiel.setEventItem(this);
 		if(this.depleted == false) {
-			System.out.println("Pfeilfalle erfolgreich ausgeführt");
+			System.out.println(this.getBeschreibung());
 			Held.schaden(this.schaden);
 			this.depleted = true;
 		}

@@ -1,21 +1,22 @@
 package events;
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Heiltrank;
 import items.Item;
 import items.Zuckerwasser;
 
 public class evt_TrankPuzzle extends Item implements Event{
 	
-	private String richtigeAntwort = "amethyst";
-	private String falscheAntwort1 = "rubin";
-	private String falscheAntwort2 = "smaragd";
-	private String falscheAntwort3 = "bernstein";
-	private String falscheAntwort4 = "saphir";
+	private String richtigeAntwort = Texte.event26RichtigeAntwort;
+	private String falscheAntwort1 = Texte.event26FalscheAntwort1;
+	private String falscheAntwort2 = Texte.event26FalscheAntwort2;
+	private String falscheAntwort3 = Texte.event26FalscheAntwort3;
+	private String falscheAntwort4 = Texte.event26FalscheAntwort4;
 	
-	private String endText = "Du nimmst die Flasche vom Podest.\n"
-			+ "In einer Stichflamme entzünden sich die anderen Flaschen.\n"
-			+ "Zurück bleiben nur kleine Häufchen an feiner grauer Asche.";
+	private String endText = Texte.event26EndText;
+	
+	private String toHeavyText = Texte.event26ToHeavyText;
 	
 	private boolean depleted = false;
 	
@@ -25,18 +26,8 @@ public class evt_TrankPuzzle extends Item implements Event{
 	public evt_TrankPuzzle() {
 		super();
 		this.setItemID(26);
-		this.setName("evt_TrankPuzzle");
-		this.setBeschreibung("In der Mitte des Raumes stehen fünf kleine Säulen, beleuchtet von einer nicht auszumachenden Lichtquelle.\n" + 
-				"Auf jeder dieser etwa armdicken Säulen stehen Fläschchen die Flüssigkeiten unterschiedlicher Farbe enthalten.\n" + 
-				"Als du dich näherst ertönt eine glockenhelle Stimme:\n" + 
-				"\"Der Trank den du suchst ist eine Mixtur aus zwei seiner Brüder.\n" + 
-				"Wähle weise!\"\n" + 
-				"Welchen Trank willst du von seinem Podest nehmen?\n" + 
-				"- den Rubin-farbenen Trank\n" + 
-				"- den Smaragdfarbenen Trank\n" + 
-				"- den Ametystfarbenen Trank\n" + 
-				"- den Bernsteinfarbenen Trank\n" + 
-				"- den Saphirfarbenen Trank");
+		this.setName(Texte.eventName26);
+		this.setBeschreibung(Texte.eventBeschreibung26);
 		this.setEventItem(true);
 	}
 
@@ -76,8 +67,7 @@ public class evt_TrankPuzzle extends Item implements Event{
 			if (Held.checkIfItemFitsInventory(TrankPuzzleBelohnung.getWeight())) {
 				Held.getInventar().add(TrankPuzzleBelohnung);
 			}else {
-				System.out.println("Die Flasche ist zu sperrig um damit komfortabel reisen zu können.\n"
-						+ "Du stellst sie vorsichtig auf dem Boden ab.");
+				System.out.println(this.toHeavyText);
 				Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(TrankPuzzleBelohnung);
 			}
 			System.out.println(this.endText);
@@ -91,8 +81,7 @@ public class evt_TrankPuzzle extends Item implements Event{
 			if (Held.checkIfItemFitsInventory(TrankPuzzleVersagen.getWeight())) {
 				Held.getInventar().add(TrankPuzzleVersagen);
 			}else {
-				System.out.println("Die Flasche ist zu sperrig um damit komfortabel reisen zu können.\n"
-						+ "Du stellst sie vorsichtig auf dem Boden ab.");
+				System.out.println(this.toHeavyText);
 				Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(TrankPuzzleVersagen);
 			}
 			System.out.println(this.endText);

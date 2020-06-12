@@ -5,18 +5,14 @@ public class Schild extends Item{
 	
 	private boolean isEquiped = false;
 	private int armor = 1;
-
-	public Schild(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
-		this.setDropEffekt(true);
-	}
 	
 	public Schild() {
 		super();
 		this.setItemID(3);
-		this.setName("Schild");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName3);
+		this.setBeschreibung(Texte.itemBeschreibung3);
 		this.setWeight(2);
+		this.setDropEffekt(true);
 	}
 
 	@Override
@@ -32,7 +28,7 @@ public class Schild extends Item{
 			Held.setArmor(-armor);
 			this.isEquiped = false;
 		}
-		System.out.println("Du lässt den Schild fallen, nun fühlst du dich ein wenig schutzlos.");
+		System.out.println(Texte.item3Drop);
 	}
 
 	@Override
@@ -41,15 +37,13 @@ public class Schild extends Item{
 		if (this.isEquiped) {
 			Held.setArmor(-armor);
 			this.isEquiped = false;
-			System.out.println("Du nimmst das Schild aus deiner Hand und hängst es an deinen Rucksack.");
+			System.out.println(Texte.item3DeEquip);
 		}else {
 			Held.setArmor(+armor);
-			System.out.println("Du streifst das Schild über deinen Unterarm, es fühlt sich robust an.");
+			this.isEquiped = true;
+			System.out.println(Texte.item3Equip);
 		}
 	}
 
-	
-	
-	
 
 }

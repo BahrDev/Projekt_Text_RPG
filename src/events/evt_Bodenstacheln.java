@@ -4,15 +4,15 @@ import game.*;
 
 public class evt_Bodenstacheln extends Item implements Event{
 
-	private String trigger = "GEHE";
-	private String saveTrigger = "SCHWARZ";
+	private String trigger = Texte.keyWordgo;
+	private String saveTrigger = Texte.event21SaveWord;
 	private int schaden = 1;
 	
 	public evt_Bodenstacheln() {
 		super();
 		this.setItemID(21);
-		this.setName("evt_Bodenstacheln");
-		this.setBeschreibung("Verweiß auf Sekundär-Beschreibung einfügen");
+		this.setName(Texte.eventName21);
+		this.setBeschreibung(Texte.eventBeschreibung21);
 		this.setEventItem(true);
 	}
 
@@ -45,7 +45,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger) && !befehl.contains(saveTrigger)) {
+		if (befehl.contains(trigger) && !befehl.contains(saveTrigger.toUpperCase())) {
 			System.out.println(this.getBeschreibung());
 			Held.schaden(this.schaden);
 			return true;

@@ -1,17 +1,19 @@
 package events;
 
 import game.Spiel;
+import game.Texte;
 import items.Item;
 
 public class evt_Schluesselblocker extends Item implements Event {
 
-	private String trigger = "SCHLÜSSEL";
+	private String trigger1 = Texte.event23Trigger1;
+	private String trigger2 = Texte.event23Trigger2;
 	
 	public evt_Schluesselblocker() {
 		super();
 		this.setItemID(23);
-		this.setName("evt_Schluesselblocker");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName23);
+		this.setBeschreibung(Texte.eventBeschreibung23);
 		this.setEventItem(true);
 	}
 	
@@ -46,7 +48,7 @@ public class evt_Schluesselblocker extends Item implements Event {
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if (befehl.contains(trigger)) {
+		if (befehl.contains(trigger1.toUpperCase()) || befehl.contains(trigger2.toUpperCase())) {
 			System.out.println(this.getBeschreibung());
 			return true;
 		}else {

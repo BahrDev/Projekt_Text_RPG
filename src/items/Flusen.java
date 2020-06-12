@@ -1,18 +1,14 @@
 package items;
 
-public class Flusen extends Item{
-	
-	
+import game.Texte;
 
-	public Flusen(int itemID, String name, String beschreibung, int weight) {
-		super(itemID, name, beschreibung, weight);
-	}
+public class Flusen extends Item{
 	
 	public Flusen() {
 		super();
 		this.setItemID(4);
-		this.setName("Flusen");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.itemName4);
+		this.setBeschreibung(Texte.itemBeschreibung4);
 		this.setWeight(0);
 	}
 
@@ -25,7 +21,7 @@ public class Flusen extends Item{
 	@Override
 	public void useEffect() {
 		super.useEffect();
-		System.out.println("Die sind zu nicht zu gebrauchen.");
+		System.out.println(this.getBeschreibung());
 	}
 	
 	
