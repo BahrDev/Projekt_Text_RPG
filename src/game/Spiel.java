@@ -173,9 +173,21 @@ public class Spiel {
 		System.out.println("===================");
 	}
 	
-	public static void exit() {
-		System.out.println(Texte.exitGame);
-		System.exit(0);
+	public static void exit(String parameter) {
+		String eingabe;
+		if(parameter == "FORCED") {
+			System.out.println(Texte.exitAbfrageForced);
+			eingabe = scan.nextLine();
+			System.exit(0);
+		}else if(parameter == "CHOICE") {
+			System.out.println(Texte.exitAbfrageChoice);
+			eingabe = scan.nextLine().toUpperCase();
+			if(eingabe.contains("Y")) {
+				System.exit(0);
+			}else if(eingabe.contains("N")) {
+				Spiel.userEingabe();
+			}
+		}
 	}
 	
 	public static void observeRoom() {
@@ -219,25 +231,21 @@ public class Spiel {
 	}
 	
 	public static void userEingabe() {		
-		try {
-			String eingabe = scan.nextLine().toUpperCase();
-			
-			if (eventItem != null) {
-				if (eventItem.triggerEffect(eingabe) != true) {
-					Spiel.befolgeBefehl(eingabe);
-				}else {
-					if (Held.isAlive()) {
-						Spiel.userEingabe();
-					}else {
-						System.out.println(Texte.deathMessage);
-						scan.close();
-					}
-				}
-			}else {
+		String eingabe = scan.nextLine().toUpperCase();
+		
+		if (eventItem != null) {
+			if (eventItem.triggerEffect(eingabe) != true) {
 				Spiel.befolgeBefehl(eingabe);
+			}else {
+				if (Held.isAlive()) {
+					Spiel.userEingabe();
+				}else {
+					System.out.println(Texte.deathMessage);
+					scan.close();
+				}
 			}
-		} catch (Exception e) {
-			System.out.println("GAME OVER");
+		}else {
+			Spiel.befolgeBefehl(eingabe);
 		}
 	}
 	
@@ -290,11 +298,11 @@ public class Spiel {
 		}else if(befehl.contains(Texte.keyWordHelp)){
 			Spiel.help();
 		}else if(befehl.contains(Texte.keyWordExit)){
-			Spiel.exit();
+			Spiel.exit("CHOICE");
 		}else if (befehl.contains("TEST")) {
 													// zum Testen während der Runtime, später entfernen
 			if (befehl.contains("1")) {
-				items.get(1).use(befehl);
+				Spiel.exit("FORCED");
 			}else if (befehl.contains("2")) {
 				System.out.println(eventItem);
 			}
@@ -317,7 +325,7 @@ public class Spiel {
 				System.out.println(Texte.betreteRaumAgain);
 			}
 			System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
-			System.out.println(checkForDoors());
+			//System.out.println(checkForDoors());
 			Spiel.event("Enter");
 		}else {
 			System.out.println(Texte.betreteRaumToDark);

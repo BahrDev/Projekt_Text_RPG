@@ -2,28 +2,29 @@ package events;
 
 import game.Held;
 import game.Spiel;
-import items.Heiltrank;
+import game.Texte;
 import items.Item;
+import items.KraftTrank;
 
 public class evt_Altar extends Item implements Event{
 	
-	private String trigger1 = "lege";
-	private String trigger2	= "alle";
-	private String trigger3	= "Altar";
-	private String triggerItem = "Flusen";
+	private String trigger1 = Texte.event30Trigger1;
+	private String trigger2	= Texte.event30Trigger1;
+	private String trigger3	= Texte.event30Trigger3;
+	private String triggerItem = Texte.itemName4;		//Flusen
 	private int triggerItemAnzahl = 4;
 	
-	private String endText = "";
+	private String endText = Texte.event30EndText;
 	
 	private boolean depleted = false;
 	
-	private Item TrankPuzzleBelohnung = new Heiltrank();
+	private Item TrankPuzzleBelohnung = new KraftTrank();
 	
 	public evt_Altar() {
 		super();
 		this.setItemID(30);
-		this.setName("evt_Altar");
-		this.setBeschreibung("");
+		this.setName(Texte.eventName30);
+		this.setBeschreibung(Texte.eventBeschreibung30);
 		this.setEventItem(true);
 	}
 
@@ -48,7 +49,6 @@ public class evt_Altar extends Item implements Event{
 	public void enterEffect() {
 		if (this.depleted == false) {
 			Spiel.setEventItem(this);
-			//System.out.println(this.getBeschreibung());
 		}
 	}
 
@@ -65,6 +65,7 @@ public class evt_Altar extends Item implements Event{
 				befehl.contains(triggerItem.toUpperCase()) &&
 				befehl.contains(trigger3.toUpperCase()) &&
 				this.inventarCheck() == triggerItemAnzahl) {
+			this.removeFlusen();
 			System.out.println(this.endText);
 			Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(TrankPuzzleBelohnung);
 			this.depleted = true;
@@ -82,6 +83,14 @@ public class evt_Altar extends Item implements Event{
 			}
 		}
 		return count;
+	}
+	
+	public void removeFlusen() {
+		for (int i = 0; i < Held.getInventar().size(); i++) {
+			if (Held.getInventar().get(i).getName() == triggerItem) {
+				Held.getInventar().remove(i);
+			}
+		}
 	}
 	
 }

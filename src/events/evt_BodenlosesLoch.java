@@ -2,17 +2,18 @@ package events;
 
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Item;
 
 public class evt_BodenlosesLoch extends Item implements Event{
 
-	private String trigger = "GEHE";
+	private String trigger = Texte.keyWordgo;
 	
 	public evt_BodenlosesLoch() {
 		super();
 		this.setItemID(25);
-		this.setName("evt_BodenlosesLoch");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName25);
+		this.setBeschreibung(Texte.eventBeschreibung25);
 		this.setEventItem(true);
 	}
 
@@ -57,8 +58,5 @@ public class evt_BodenlosesLoch extends Item implements Event{
 			return false;
 		}
 	}
-	
-	
-	
 	
 }

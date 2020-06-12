@@ -2,17 +2,18 @@ package events;
 
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Item;
 
 public class evt_AltFinale extends Item implements Event{
 
-	private String trigger = "spring";
+	private String trigger = Texte.event31Trigger;
 	
 	public evt_AltFinale() {
 		super();
 		this.setItemID(31);
-		this.setName("evt_Finale");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName31);
+		this.setBeschreibung(Texte.eventBeschreibung31);
 		this.setEventItem(true);
 	}
 	
@@ -49,8 +50,8 @@ public class evt_AltFinale extends Item implements Event{
 		if (Held.getKraft() == 10 && 
 			befehl.contains(trigger.toUpperCase())) {
 			System.out.println(this.getBeschreibung());
-			Spiel.closeScan();
-			System.out.println("Credits hier abspielen lassen");
+			System.out.println(Texte.credits);
+			Spiel.exit("FORCED");
 			return true;
 		}else {
 			return false;

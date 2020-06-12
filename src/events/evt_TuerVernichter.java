@@ -2,18 +2,19 @@ package events;
 
 import game.Held;
 import game.Spiel;
+import game.Texte;
 import items.Item;
 
 public class evt_TuerVernichter extends Item implements Event{
 
 	private boolean depleted = false;
-	private String itemToTrigger = "Lampe";
+	private String itemToTrigger = Texte.itemName6;		// Lampe
 	
 	public evt_TuerVernichter() {
 		super();
 		this.setItemID(24);
-		this.setName("evt_TuerVernichter");
-		this.setBeschreibung("Verweiß bitte hier einfügen!");
+		this.setName(Texte.eventName24);
+		this.setBeschreibung(Texte.eventBeschreibung24);
 		this.setEventItem(true);
 	}
 	
