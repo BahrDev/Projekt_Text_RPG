@@ -301,6 +301,7 @@ public class Texte {
 	public static String eventBeschreibung23 = "Die Türen dieses Raumes scheinen auf dieser Seite keine Schlüssellöcher zu besitzen.";
 	public static String event23Trigger1 = "Schlüssel";
 	public static String event23Trigger2 = "Tür";
+	public static String event23EndText = "Du betrittst den Raum und hörst, wie sich die andere Tür automatisch entriegelt.";
 	
 	//itemID: 24 - TürVernichter
 	public static String eventName24 = "evt_TuerVernichter";
@@ -349,7 +350,8 @@ public class Texte {
 												"An der Decke hängt ein Gitterkäfig in dem du einen Schlüssel funkeln sehen kannst.\n" + 
 												"Über dem einsamen Hebel steht in den Stein gemeißelt:\n" + 
 												"\"Wieviel Gliedmaße haben die sieben mal sieben Freunde des einarmigen Alrik?\"\n" +
-												"Welche Hebel möchtest du also nach unten ziehen?";
+												"Welche Hebel möchtest du also nach unten ziehen, bevor du den Hebel gegenüber ziehst?";
+	public static String event27Trigger = "Hebel";
 	public static String[] event27RichtigeAntwort = {"2", "3", "7"};
 	public static String[] event27AltRichtigeAntwort = {"zwei", "drei", "sieben"};
 	public static String[] event27FalscheAntwort = {"1", "4", "5", "6", "8", "9"};

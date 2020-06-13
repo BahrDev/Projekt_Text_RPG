@@ -12,6 +12,7 @@ public class evt_GiftPfeilPuzzle extends Item implements Event{
 	private String[] falscheAntwort = Texte.event27FalscheAntwort;
 	private String[] altFalscheAntwort = Texte.event27AltFalscheAntwort;
 	
+	private String trigger = Texte.event27Trigger;
 	private String endText = Texte.event27EndText;
 	private String fehlerText = Texte.event27FehlerText;
 	
@@ -61,49 +62,54 @@ public class evt_GiftPfeilPuzzle extends Item implements Event{
 	public boolean triggerEffect(String befehl) {
 		int richtigeHebel = 0;
 		boolean fail = false;
-		// ---------- Hebelprüfung -----------
-		for (int i = 0; i < falscheAntwort.length; i++) {
-			if (befehl.contains(this.falscheAntwort[i].toUpperCase())) {
-				fail = true;
-				break;
-			}
-		}
-		if (fail == false) {
-			for (int i = 0; i < altFalscheAntwort.length; i++) {
-				if (befehl.contains(this.altFalscheAntwort[i].toUpperCase())) {
+		
+		if(befehl.contains(this.trigger.toUpperCase())) {
+			// ---------- Hebelprüfung -----------
+			for (int i = 0; i < falscheAntwort.length; i++) {
+				if (befehl.contains(this.falscheAntwort[i].toUpperCase())) {
 					fail = true;
 					break;
 				}
 			}
 			if (fail == false) {
-				for (int i = 0; i < richtigeAntwort.length; i++) {
-					if (befehl.contains(this.richtigeAntwort[i].toUpperCase())) {
-						richtigeHebel++;
+				for (int i = 0; i < altFalscheAntwort.length; i++) {
+					if (befehl.contains(this.altFalscheAntwort[i].toUpperCase())) {
+						fail = true;
+						break;
 					}
 				}
-				if(richtigeHebel == 0) {
-					for (int i = 0; i < altRichtigeAntwort.length; i++) {
-						if(befehl.contains(this.altRichtigeAntwort[i].toUpperCase())) {
+				if (fail == false) {
+					for (int i = 0; i < richtigeAntwort.length; i++) {
+						if (befehl.contains(this.richtigeAntwort[i].toUpperCase())) {
 							richtigeHebel++;
+						}
+					}
+					if(richtigeHebel == 0) {
+						for (int i = 0; i < altRichtigeAntwort.length; i++) {
+							if(befehl.contains(this.altRichtigeAntwort[i].toUpperCase())) {
+								richtigeHebel++;
+							}
 						}
 					}
 				}
 			}
-		}
-		// ---------- Ergebnisprüfung -----------
-		if (this.depleted == false) {
-			if(fail) {
-				System.out.println(this.fehlerText);
-				Held.schaden(1);
-			}else if(fail == false && richtigeHebel < 3) {
-				System.out.println(this.fehlerText);
-				Held.schaden(1);			
-			}else if(fail == false && richtigeHebel == 3) {
-				System.out.println(this.endText);
-				Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(GiftPfeilPuzzleBelohnung);
-				this.depleted = true;
+			// ---------- Ergebnisprüfung -----------
+			if (this.depleted == false) {
+				if(fail) {
+					System.out.println(this.fehlerText);
+					Held.schaden(1);
+				}else if(fail == false && richtigeHebel < 3) {
+					System.out.println(this.fehlerText);
+					Held.schaden(1);			
+				}else if(fail == false && richtigeHebel == 3) {
+					System.out.println(this.endText);
+					Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(GiftPfeilPuzzleBelohnung);
+					this.depleted = true;
+				}
+				return true;
+			}else {
+				return false;
 			}
-			return true;
 		}else {
 			return false;
 		}

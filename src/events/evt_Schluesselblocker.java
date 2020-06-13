@@ -2,12 +2,16 @@ package events;
 
 import game.Spiel;
 import game.Texte;
+import game.Tuer;
 import items.Item;
 
 public class evt_Schluesselblocker extends Item implements Event {
 
 	private String trigger1 = Texte.event23Trigger1;
 	private String trigger2 = Texte.event23Trigger2;
+	private Tuer lockedDoor = Spiel.getTueren()[2][1][3][1];
+	private Tuer doorToUnlock = Spiel.getTueren()[2][1][2][2];
+	private String endText = Texte.event23EndText;
 	
 	public evt_Schluesselblocker() {
 		super();
@@ -39,6 +43,10 @@ public class evt_Schluesselblocker extends Item implements Event {
 	@Override
 	public void enterEffect() {
 		Spiel.setEventItem(this);
+		if (this.lockedDoor.isSimpleLocked() == false) {
+			this.doorToUnlock.setSimpleLocked(false);
+			System.out.println(this.endText);
+		}
 	}
 
 	@Override
