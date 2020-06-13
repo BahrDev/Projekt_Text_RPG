@@ -31,7 +31,7 @@ public class Spiel {
 	public static void generiereDefaultMap() throws CloneNotSupportedException{
 		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
 		map[1][1] = new Raum(1, 1, 6, 31);
-		map[2][1] = new Raum(2, 1, 5, 23);
+		map[2][1] = new Raum(2, 1, 5);			// 23 entfernt
 		map[3][1] = new Raum(3, 1, 4, 29);	
 		map[4][1] = new Raum(4, 1, 28);		
 		//

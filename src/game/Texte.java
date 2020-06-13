@@ -301,7 +301,7 @@ public class Texte {
 	public static String eventBeschreibung23 = "Die Türen dieses Raumes scheinen auf dieser Seite keine Schlüssellöcher zu besitzen.";
 	public static String event23Trigger1 = "Schlüssel";
 	public static String event23Trigger2 = "Tür";
-	public static String event23EndText = "Du betrittst den Raum und hörst, wie sich die andere Tür automatisch entriegelt.";
+//	public static String event23EndText = "Du betrittst den Raum und hörst, wie sich die andere Tür automatisch entriegelt.";
 	
 	//itemID: 24 - TürVernichter
 	public static String eventName24 = "evt_TuerVernichter";

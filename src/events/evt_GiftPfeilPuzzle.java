@@ -49,7 +49,9 @@ public class evt_GiftPfeilPuzzle extends Item implements Event{
 	public void enterEffect() {
 		if (this.depleted == false) {
 			Spiel.setEventItem(this);
-			System.out.println(this.getBeschreibung());
+			if (Held.isHasSight()) {
+				System.out.println(this.getBeschreibung());
+			}
 		}
 	}
 

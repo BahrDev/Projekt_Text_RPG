@@ -41,7 +41,9 @@ public class evt_TuerVernichter extends Item implements Event{
 	public void enterEffect() {
 		Spiel.setEventItem(this);
 		if(this.depleted == false) {
-			System.out.println(this.getBeschreibung());
+			if (Held.isHasSight()) {
+				System.out.println(this.getBeschreibung());
+			}
 			Spiel.getLastDoorUsed().setDestroyed(true);
 			for (int i = 0; i < Held.getInventar().size(); i++) {
 				if (Held.getInventar().get(i).getName() == itemToTrigger) {
