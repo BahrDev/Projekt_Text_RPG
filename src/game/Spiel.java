@@ -329,8 +329,10 @@ public class Spiel {
 			if (map[Held.getPosX()][Held.getPosY()].isBesucht()) {
 				System.out.println(Texte.betreteRaumAgain);
 			}
-			if (Held.getPosX() != Spiel.endRoomX && Held.getPosY() != Spiel.endRoomY){
-				System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
+			
+			if (Held.getPosX() == Spiel.endRoomX && Held.getPosY() == Spiel.endRoomY){
+			}else {
+				System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());
 				System.out.println(checkForDoors());
 			}
 
