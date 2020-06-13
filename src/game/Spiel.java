@@ -327,7 +327,7 @@ public class Spiel {
 				System.out.println(Texte.betreteRaumAgain);
 			}
 			System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
-			//System.out.println(checkForDoors());
+			System.out.println(checkForDoors());
 			Spiel.event("Enter");
 		}else {
 			System.out.println(Texte.betreteRaumToDark);
