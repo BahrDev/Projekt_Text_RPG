@@ -6,7 +6,7 @@ import items.*;
 public class Held {
 	
 	// Attribute
-	private static int leben = 3;
+	private static int leben = 5;
 	private static int lebenMax = 5;
 	private static int kraft = 5;
 	private static int armor = 0;
@@ -63,7 +63,11 @@ public class Held {
 	
 	public static void heilung(int x) {
 		if (leben < lebenMax) {
-			leben += x;
+			if (leben + x >lebenMax) {
+				leben = lebenMax;
+			}else {
+				leben += x;
+			}
 			System.out.println(Texte.heldHeilung1 + " " + x + " " +  Texte.heldHeilung2);
 		}else {
 			System.out.println(Texte.heldHeilung3);

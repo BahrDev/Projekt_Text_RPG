@@ -21,7 +21,7 @@ public class Spiel {
 		Spiel.generiereAlleItems();
 		Spiel.generiereDefaultMap();
 		Spiel.setStartingPos(1, 1);
-		Spiel.startRaum();
+		Spiel.starteSpiel();
 		Spiel.userEingabe();
 		
 	}
@@ -177,7 +177,7 @@ public class Spiel {
 		String eingabe;
 		if(parameter == "FORCED") {
 			System.out.println(Texte.exitAbfrageForced);
-			eingabe = scan.nextLine();
+			scan.nextLine();
 			System.exit(0);
 		}else if(parameter == "CHOICE") {
 			System.out.println(Texte.exitAbfrageChoice);
@@ -260,6 +260,8 @@ public class Spiel {
 				Spiel.go(0, -1);
 			}else if (befehl.contains(Texte.keyWordSouth)) {
 				Spiel.go(0, 1);
+			}else {
+				System.out.println(Texte.befolgeBefehlWohin);
 			}
 		}else if (befehl.contains(Texte.keyWordObserve)) {
 			Item itemFromCMD = Spiel.commandTranslatorItem(befehl, "Alle");
@@ -434,6 +436,14 @@ public class Spiel {
 	public static void closeScan() {
 		scan.close();
 	}
+	
+	public static void starteSpiel () {
+		System.out.println(Texte.intro);
+		scan.nextLine();
+		Spiel.startRaum();
+	}
+	
+	// -------------------- Getter und Setter --------------------
 	
 	public static Event getEventItem() {
 		return eventItem;

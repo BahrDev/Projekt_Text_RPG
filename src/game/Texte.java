@@ -35,6 +35,14 @@ public class Texte {
 
 	// -------------------- Spielmechanik-Texte --------------------
 	
+	public static String intro = "    /\\        | |             | |        | |              \n" + 
+								 "   /  \\   _ __| | ____ _ _ __ | | ___   _| |__  _   _ ___ \n" + 
+								 "  / /\\ \\ | '__| |/ / _` | '_ \\| |/ / | | | '_ \\| | | / __|\n" + 
+								 " / ____ \\| |  |   < (_| | | | |   <| |_| | |_) | |_| \\__ \\\n" + 
+								 "/_/    \\_\\_|  |_|\\_\\__,_|_| |_|_|\\_\\\\__,_|_.__/ \\__,_|___/\n" + 
+								 "==========================================================\n" + 
+								 "Drücke Enter zum starten!";
+	
 	public static String goNeedArkaneKubus = "Du brauchst einen besonderen Schlüssel um diese Tür zu öffnen.";
 	public static String goDoorLocked = "Diese Tür ist verschlossen.";
 	public static String goDoorwayUnpassable = "Dieser Durchgang ist verschüttet.";
@@ -76,10 +84,9 @@ public class Texte {
 	public static String observeDoorOpen = "Eine gewöhnliche Tür, sie ist nicht verriegelt.";
 	public static String observeDoorNoExit= "Dort ist kein Ausgang.";
 	
+	public static String befolgeBefehlWohin = "Durch welche Tür möchtest du gehen?";
 	public static String befolgeBefehlWhichDoor = "Welche Tür möchtest du dir denn ansehen?";
-	
 	public static String befolgeBefehlWhatToLookAt = "Was genau möchtest du dir ansehen?";
-	
 	public static String befolgeBefehlWrongCommand = "Du möchtest was tun?";
 	
 	public static String betreteRaumAgain = "Hier warst du schon einmal.";
@@ -95,7 +102,8 @@ public class Texte {
 			+ "\nGroß genug, als das du hättest hindurch fallen können."
 			+ "\nAußerhalb des Kegels aus Licht ist nur finsterste Dunkelheit."
 			+ "\nZu deinem Füßen liegen Trümmer von Ziegelsteinen und eine alte Öl-Lampe."
-			+ "\nZeit einen Weg hier raus zu finden."
+			+ "\nZeit einen Weg hier heraus zu finden."
+			+ "\nDu könntest um Hilfe rufen."
 			+ "\nWas möchtest du tun?";
 	
 	public static String checkForDoors = "Dieser Raum hat Türen im";
