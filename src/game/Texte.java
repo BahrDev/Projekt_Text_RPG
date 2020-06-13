@@ -199,7 +199,7 @@ public class Texte {
 		raumTexte[4][4] = "Dieser Raum hat geziegelte Wände und einen ebensolchen Boden.\n" + 
 						"Unregelmäßig verteilt gibt es größere Ziegel, die die Form widerlicher Fratzen haben.";
 		
-		raumTexte[5][2] = "";	
+		raumTexte[2][5] = "";	
 	}
 		
 	// -------------------- Items --------------------
@@ -431,8 +431,8 @@ public class Texte {
 										+ "Und eine Flasche die auf dem Altar steht.";
 	
 	//itemID: 31 - altFinale
-	public static String eventName31 = "evt_Finale";
-	public static String eventBeschreibung31 = "Dein Sprungt fühlt sich fast schon zu einfach an.\n"
+	public static String eventName31 = "evt_AltFinale";
+	public static String eventBeschreibung31 = "Dein Sprung fühlt sich fast schon zu einfach an.\n"
 											+ "Mit leichtigkeit segelst du fast 10 Schritt hoch in die Luft, durch die Öffnung in der Decke.\n"
 											+ "Oben angekommen findest du dich in einem Gebäude wieder.\n"
 											+ "Es ist aus großen Sandsteinquadern gemacht, vielleicht ein alter Tempel.\n"

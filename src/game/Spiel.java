@@ -14,6 +14,8 @@ public class Spiel {
 	private static Event eventItem = null;
 	private static Tuer lastDoorUsed = null;
 	public static boolean eventsSichtbar = false;
+	private static int endRoomX = 2;
+	private static int endRoomY = 5;
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
 
@@ -304,9 +306,10 @@ public class Spiel {
 		}else if (befehl.contains("TEST")) {
 													// zum Testen während der Runtime, später entfernen
 			if (befehl.contains("1")) {
-				Spiel.exit("FORCED");
+				Held.getInventar().add(new Arkankubus());
 			}else if (befehl.contains("2")) {
-				System.out.println(eventItem);
+				Held.setPosX(2);
+				Held.setPosY(4);
 			}
 		}else {
 			System.out.println(Texte.befolgeBefehlWrongCommand);
@@ -326,8 +329,11 @@ public class Spiel {
 			if (map[Held.getPosX()][Held.getPosY()].isBesucht()) {
 				System.out.println(Texte.betreteRaumAgain);
 			}
-			System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
-			System.out.println(checkForDoors());
+			if (Held.getPosX() != Spiel.endRoomX && Held.getPosY() != Spiel.endRoomY){
+				System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
+				System.out.println(checkForDoors());
+			}
+
 			Spiel.event("Enter");
 		}else {
 			System.out.println(Texte.betreteRaumToDark);
