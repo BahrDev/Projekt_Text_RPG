@@ -35,6 +35,14 @@ public class Texte {
 
 	// -------------------- Spielmechanik-Texte --------------------
 	
+	public static String intro = "    /\\        | |             | |        | |              \n" + 
+								 "   /  \\   _ __| | ____ _ _ __ | | ___   _| |__  _   _ ___ \n" + 
+								 "  / /\\ \\ | '__| |/ / _` | '_ \\| |/ / | | | '_ \\| | | / __|\n" + 
+								 " / ____ \\| |  |   < (_| | | | |   <| |_| | |_) | |_| \\__ \\\n" + 
+								 "/_/    \\_\\_|  |_|\\_\\__,_|_| |_|_|\\_\\\\__,_|_.__/ \\__,_|___/\n" + 
+								 "==========================================================\n" + 
+								 "Drücke Enter zum starten!";
+	
 	public static String goNeedArkaneKubus = "Du brauchst einen besonderen Schlüssel um diese Tür zu öffnen.";
 	public static String goDoorLocked = "Diese Tür ist verschlossen.";
 	public static String goDoorwayUnpassable = "Dieser Durchgang ist verschüttet.";
@@ -76,10 +84,9 @@ public class Texte {
 	public static String observeDoorOpen = "Eine gewöhnliche Tür, sie ist nicht verriegelt.";
 	public static String observeDoorNoExit= "Dort ist kein Ausgang.";
 	
+	public static String befolgeBefehlWohin = "Durch welche Tür möchtest du gehen?";
 	public static String befolgeBefehlWhichDoor = "Welche Tür möchtest du dir denn ansehen?";
-	
 	public static String befolgeBefehlWhatToLookAt = "Was genau möchtest du dir ansehen?";
-	
 	public static String befolgeBefehlWrongCommand = "Du möchtest was tun?";
 	
 	public static String betreteRaumAgain = "Hier warst du schon einmal.";
@@ -95,7 +102,8 @@ public class Texte {
 			+ "\nGroß genug, als das du hättest hindurch fallen können."
 			+ "\nAußerhalb des Kegels aus Licht ist nur finsterste Dunkelheit."
 			+ "\nZu deinem Füßen liegen Trümmer von Ziegelsteinen und eine alte Öl-Lampe."
-			+ "\nZeit einen Weg hier raus zu finden."
+			+ "\nZeit einen Weg hier heraus zu finden."
+			+ "\nDu könntest um Hilfe rufen."
 			+ "\nWas möchtest du tun?";
 	
 	public static String checkForDoors = "Dieser Raum hat Türen im";
@@ -191,7 +199,7 @@ public class Texte {
 		raumTexte[4][4] = "Dieser Raum hat geziegelte Wände und einen ebensolchen Boden.\n" + 
 						"Unregelmäßig verteilt gibt es größere Ziegel, die die Form widerlicher Fratzen haben.";
 		
-		raumTexte[5][2] = "";	
+		raumTexte[2][5] = "";	
 	}
 		
 	// -------------------- Items --------------------
@@ -293,6 +301,7 @@ public class Texte {
 	public static String eventBeschreibung23 = "Die Türen dieses Raumes scheinen auf dieser Seite keine Schlüssellöcher zu besitzen.";
 	public static String event23Trigger1 = "Schlüssel";
 	public static String event23Trigger2 = "Tür";
+//	public static String event23EndText = "Du betrittst den Raum und hörst, wie sich die andere Tür automatisch entriegelt.";
 	
 	//itemID: 24 - TürVernichter
 	public static String eventName24 = "evt_TuerVernichter";
@@ -341,7 +350,8 @@ public class Texte {
 												"An der Decke hängt ein Gitterkäfig in dem du einen Schlüssel funkeln sehen kannst.\n" + 
 												"Über dem einsamen Hebel steht in den Stein gemeißelt:\n" + 
 												"\"Wieviel Gliedmaße haben die sieben mal sieben Freunde des einarmigen Alrik?\"\n" +
-												"Welche Hebel möchtest du also nach unten ziehen?";
+												"Welche Hebel möchtest du also nach unten ziehen, bevor du den Hebel gegenüber ziehst?";
+	public static String event27Trigger = "Hebel";
 	public static String[] event27RichtigeAntwort = {"2", "3", "7"};
 	public static String[] event27AltRichtigeAntwort = {"zwei", "drei", "sieben"};
 	public static String[] event27FalscheAntwort = {"1", "4", "5", "6", "8", "9"};
@@ -421,8 +431,8 @@ public class Texte {
 										+ "Und eine Flasche die auf dem Altar steht.";
 	
 	//itemID: 31 - altFinale
-	public static String eventName31 = "evt_Finale";
-	public static String eventBeschreibung31 = "Dein Sprungt fühlt sich fast schon zu einfach an.\n"
+	public static String eventName31 = "evt_AltFinale";
+	public static String eventBeschreibung31 = "Dein Sprung fühlt sich fast schon zu einfach an.\n"
 											+ "Mit leichtigkeit segelst du fast 10 Schritt hoch in die Luft, durch die Öffnung in der Decke.\n"
 											+ "Oben angekommen findest du dich in einem Gebäude wieder.\n"
 											+ "Es ist aus großen Sandsteinquadern gemacht, vielleicht ein alter Tempel.\n"

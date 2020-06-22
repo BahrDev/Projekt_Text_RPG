@@ -22,7 +22,7 @@ public class Schluessel extends Item{
 			this.UseEffect(1, 0);
 		}else if (befehl.toUpperCase().contains(Texte.keyWordNorth)) {
 			this.UseEffect(0, -1);
-		}else if (befehl.toUpperCase().contains(Texte.keyWordWest)) {
+		}else if (befehl.toUpperCase().contains(Texte.keyWordSouth)) {
 			this.UseEffect(0, 1);
 		}else {
 			System.out.println(Texte.item1WhichDoor);

@@ -6,7 +6,7 @@ public class evt_Bodenstacheln extends Item implements Event{
 
 	private String trigger = Texte.keyWordgo;
 	private String saveTrigger = Texte.event21SaveWord;
-	private int schaden = 1;
+	private int schaden = 2;
 	
 	public evt_Bodenstacheln() {
 		super();

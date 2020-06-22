@@ -49,7 +49,10 @@ public class evt_ArmFallenPuzzle extends Item implements Event{
 	public void enterEffect() {
 		if (this.depleted == false) {
 			Spiel.setEventItem(this);
-			System.out.println(this.getBeschreibung());
+			if(Held.isHasSight()) {
+				System.out.println(this.getBeschreibung());
+			}
+			
 		}
 	}
 
@@ -60,17 +63,18 @@ public class evt_ArmFallenPuzzle extends Item implements Event{
 
 	@Override
 	public boolean triggerEffect(String befehl) {
-		if(befehl.contains(this.richtigeAntwort)) {
-			System.out.println(this.endText);
-			Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(ArmFallenPuzzleBelohnung);
-			this.depleted = true;
-			return true;
-		}else if (befehl.contains(this.falscheAntwort1.toUpperCase()) ||
-				befehl.contains(this.falscheAntwort2.toUpperCase()) ||
-				befehl.contains(this.falscheAntwort3.toUpperCase()) ||
-				befehl.contains(this.falscheAntwort4.toUpperCase())){
-			System.out.println(this.fehlerText);
-			Held.setAlive(false);
+		if (this.depleted == false) {
+			if(befehl.contains(this.richtigeAntwort)) {
+				System.out.println(this.endText);
+				Spiel.getMap()[Held.getPosX()][Held.getPosY()].addItemToRoom(ArmFallenPuzzleBelohnung);
+				this.depleted = true;
+			}else if (befehl.contains(this.falscheAntwort1.toUpperCase()) ||
+					befehl.contains(this.falscheAntwort2.toUpperCase()) ||
+					befehl.contains(this.falscheAntwort3.toUpperCase()) ||
+					befehl.contains(this.falscheAntwort4.toUpperCase())){
+				System.out.println(this.fehlerText);
+				Held.setAlive(false);
+			}
 			return true;
 		}else {
 			return false;

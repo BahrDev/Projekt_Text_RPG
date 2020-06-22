@@ -14,6 +14,8 @@ public class Spiel {
 	private static Event eventItem = null;
 	private static Tuer lastDoorUsed = null;
 	public static boolean eventsSichtbar = false;
+	private static int endRoomX = 2;
+	private static int endRoomY = 5;
 	
 	public static void main(String[] args) throws CloneNotSupportedException{
 
@@ -21,7 +23,7 @@ public class Spiel {
 		Spiel.generiereAlleItems();
 		Spiel.generiereDefaultMap();
 		Spiel.setStartingPos(1, 1);
-		Spiel.startRaum();
+		Spiel.starteSpiel();
 		Spiel.userEingabe();
 		
 	}
@@ -31,7 +33,7 @@ public class Spiel {
 	public static void generiereDefaultMap() throws CloneNotSupportedException{
 		// Erinnerung: Raum(X, Y, ItemID1, ItemID2, ItemID3)
 		map[1][1] = new Raum(1, 1, 6, 31);
-		map[2][1] = new Raum(2, 1, 5, 23);
+		map[2][1] = new Raum(2, 1, 5);			// 23 entfernt
 		map[3][1] = new Raum(3, 1, 4, 29);	
 		map[4][1] = new Raum(4, 1, 28);		
 		//
@@ -56,7 +58,7 @@ public class Spiel {
 		tueren[1][1][1][2] = new Tuer(1, 1, 1, 2, false, false);
 		tueren[2][1][3][1] = new Tuer(2, 1, 3, 1, true, false);
 		tueren[2][1][2][2] = new Tuer(2, 1, 2, 2, true, false);
-		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, false, false);
+		tueren[3][1][3][2] = new Tuer(3, 1, 3, 2, true, false);
 		tueren[4][1][4][2] = new Tuer(4, 1, 4, 2, false, false);
 		
 		tueren[1][2][2][2] = new Tuer(1, 2, 2, 2, true, false);
@@ -177,7 +179,7 @@ public class Spiel {
 		String eingabe;
 		if(parameter == "FORCED") {
 			System.out.println(Texte.exitAbfrageForced);
-			eingabe = scan.nextLine();
+			scan.nextLine();
 			System.exit(0);
 		}else if(parameter == "CHOICE") {
 			System.out.println(Texte.exitAbfrageChoice);
@@ -260,6 +262,8 @@ public class Spiel {
 				Spiel.go(0, -1);
 			}else if (befehl.contains(Texte.keyWordSouth)) {
 				Spiel.go(0, 1);
+			}else {
+				System.out.println(Texte.befolgeBefehlWohin);
 			}
 		}else if (befehl.contains(Texte.keyWordObserve)) {
 			Item itemFromCMD = Spiel.commandTranslatorItem(befehl, "Alle");
@@ -302,9 +306,10 @@ public class Spiel {
 		}else if (befehl.contains("TEST")) {
 													// zum Testen während der Runtime, später entfernen
 			if (befehl.contains("1")) {
-				Spiel.exit("FORCED");
+				Held.getInventar().add(new Arkankubus());
 			}else if (befehl.contains("2")) {
-				System.out.println(eventItem);
+				Held.setPosX(2);
+				Held.setPosY(4);
 			}
 		}else {
 			System.out.println(Texte.befolgeBefehlWrongCommand);
@@ -324,8 +329,13 @@ public class Spiel {
 			if (map[Held.getPosX()][Held.getPosY()].isBesucht()) {
 				System.out.println(Texte.betreteRaumAgain);
 			}
-			System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());;
-			//System.out.println(checkForDoors());
+			
+			if (Held.getPosX() == Spiel.endRoomX && Held.getPosY() == Spiel.endRoomY){
+			}else {
+				System.out.println(map[Held.getPosX()][Held.getPosY()].getBeschreibung());
+				System.out.println(checkForDoors());
+			}
+
 			Spiel.event("Enter");
 		}else {
 			System.out.println(Texte.betreteRaumToDark);
@@ -434,6 +444,14 @@ public class Spiel {
 	public static void closeScan() {
 		scan.close();
 	}
+	
+	public static void starteSpiel () {
+		System.out.println(Texte.intro);
+		scan.nextLine();
+		Spiel.startRaum();
+	}
+	
+	// -------------------- Getter und Setter --------------------
 	
 	public static Event getEventItem() {
 		return eventItem;

@@ -38,7 +38,9 @@ public class evt_Pfeilfalle extends Item implements Cloneable, Event{
 	public void enterEffect() {
 		Spiel.setEventItem(this);
 		if(this.depleted == false) {
-			System.out.println(this.getBeschreibung());
+			if(Held.isHasSight()) {
+				System.out.println(this.getBeschreibung());
+			}
 			Held.schaden(this.schaden);
 			this.depleted = true;
 		}
