@@ -3,6 +3,9 @@ Eine Übungsaufgabe aus dem Modul Anwendungsentwicklung.
 Wurde mir zugespielt von einer Mitschülerin, die mir ein halbes Jahr vorraus ist. 
 Werde die Aufgabe eigenständig bearbeiten und hier Updaten.
 
+V1.0 Release:
+https://www.dropbox.com/s/ug3rcpfreymku41/Arkankubus%20v1.0.rar?dl=0
+(inkl. batch und FAQ)
 
 Die Aufgabe leutet im Original wie folgt:
 
